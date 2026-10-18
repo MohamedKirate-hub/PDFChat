@@ -1,6 +1,5 @@
 from langchain_community.document_loaders import PyPDFLoader, TextLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from transformers import AutoModelForCausalLM, AutoTokenizer
 from pathlib import Path
 from typing import List
 
