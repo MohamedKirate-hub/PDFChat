@@ -26,5 +26,3 @@ class DocsChunking:
 
     def get_documents(self) -> List:
         return self.documents
-    
-
