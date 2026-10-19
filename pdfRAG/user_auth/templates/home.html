@@ -1,0 +1,13 @@
+<div>
+    {% if request.user.is_authenticated %}
+        <form action="{% url 'logout' %}" method='post'>
+            {% csrf_token %}
+            <button type="submit">
+                Logout
+            </button>
+        </form>
+    {% else %}
+        <a href="{%url 'login' %}">Login</a>
+        <a href="{%url 'logout' %}">Register</a>
+    {% endif %}
+</div>

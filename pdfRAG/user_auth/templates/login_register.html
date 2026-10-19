@@ -1,0 +1,31 @@
+<div class="auth-container">
+    <div class="auth-card">
+        <h1 class="auth-title">
+            {% if page == 'login' %}
+                Log in to your account
+            {% else %}
+                Create an account
+            {% endif %}
+        </h1>
+
+        <form method="post" class="auth-form">
+            {% csrf_token %}
+            
+            <div class="form-fields">
+                {{ form.as_p }}
+            </div>
+
+            <button type="submit" class="btn-auth-submit">
+                {% if page == 'login' %}Log in{% else %}Sign up{% endif %}
+            </button>
+        </form>
+
+        <div class="auth-footer">
+            {% if page == 'login' %}
+                <p>Don't have an account? <a href="{% url 'register' %}" class="auth-link">Sign up</a></p>
+            {% else %}
+                <p>Already have an account? <a href="{% url 'login' %}" class="auth-link">Log in</a></p>
+            {% endif %}
+        </div>
+    </div>
+</div>
