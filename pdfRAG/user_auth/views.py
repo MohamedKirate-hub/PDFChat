@@ -13,9 +13,10 @@ def logout_view(request):
     return redirect('home')
 
 def login_view(request):
-    form = AuthenticationForm(request)
     page = 'login'
+    form = AuthenticationForm()
     if request.method == 'POST':
+        form = AuthenticationForm(request, request.POST)
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
