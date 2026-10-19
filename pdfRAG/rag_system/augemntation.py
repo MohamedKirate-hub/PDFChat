@@ -3,9 +3,9 @@ from transformers import PreTrainedTokenizer
 from langchain_core.documents import Document
 
 class Augment:
-    def __init__(self, documents: List[Document], hisory: List[Dict]):
+    def __init__(self, documents: List[Document], history: List[Dict]):
         self.documents = documents
-        self.history = hisory or []
+        self.history = history or []
         self.instructions = self._set_instructions()
 
     def _set_instructions(self):
@@ -34,7 +34,7 @@ class Augment:
                     f"Metadata: {metadata}\n"
                     f"Content: {content}")
 
-        return "\n".join(content)
+        return "\n\n".join(context)
 
     def build_prompt(self, query):
         context = self._context_selection()
@@ -46,5 +46,5 @@ class Augment:
         return [
             {"role": "system", "content": self.instructions},
             *self.history,
-            {"role": "users", "context": prompt}
+            {"role": "user", "content": prompt}
         ]

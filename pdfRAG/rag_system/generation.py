@@ -7,7 +7,7 @@ class Generation:
         self.history = history or []
         self.model_name = "Qwen/Qwen3-0.6B"
         self.model = AutoModelForCausalLM.from_pretrained(self.model_name)
-        self.tokenizer = AutoTokenizer.from_pretrained(self.model)
+        self.tokenizer = AutoTokenizer.from_pretrained(self.model_name)
         self.pipeline = pipeline(
             task = "text-generation",
             model = self.model, tokenizer = self.tokenizer,
@@ -24,10 +24,11 @@ class Generation:
         prompt_template = self.augment.build_prompt(query)
         prompt = self.tokenizer.apply_chat_template(
             prompt_template,
+            tokenize=False,
             add_generation_prompt = True,
-            tokenize = False, enable_thinking = False,
+            enable_thinking = False,
         )
-        answer = prompt.invoke(query)
+        answer = self.llm.invoke(prompt)
         self.history.extend(
             [
                 {"role": "user", "content": query},

@@ -32,18 +32,22 @@ class SemanticSearch(SearchBase):
     
     def search(self, query: str, top_k: int) -> List:
         model = self.vector_store.as_retriever(
-            kwargs={"k": top_k}
+            search_kwargs={"k": top_k}
             )
         return model.invoke(query)
 
 class HybridSearch(SearchBase):
     def __init__(self, documents: List, k1: float = 1.25, b: float = 0.75):
         super().__init__(documents)
-        self.bm25_retriever = BM25Search(documents, k1, b)
-        self.sementic_retriever = SemanticSearch(documents)
+        self.bm25_retriever = BM25Search(documents, k1, b).model
+        self.sementic_retriever = SemanticSearch(documents).vector_store.as_retriever()
         self.model = EnsembleRetriever(
-            retrievers=[self.bm25_retriever, self.sementic_retriever],
+            retrievers=[self.bm25_retriever,
+                        self.sementic_retriever],
             weights = [0.5, 0.5])
     
     def search(self, query, top_k):
-        return self.model.invoke(query) | RunnableLambda(lambda docs: docs[:top_k])
+        self.model.retrievers[0].k = top_k
+        self.model.retrievers[1].search_kwargs["k"] = top_k
+        docs = self.model.invoke(query)
+        return docs[:top_k]
