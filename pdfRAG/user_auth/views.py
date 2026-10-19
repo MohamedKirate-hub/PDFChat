@@ -3,8 +3,12 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render, redirect
 from user_auth.forms import RegisterForm
 
+from loading.models import LoadingBase
+
 def home(request):
-    return render(request, 'home.html')
+    data = LoadingBase.objects.filter(user=request.user)
+    context = {'data': data}
+    return render(request, 'home.html', context)
 
 def logout_view(request):
     if request.method == 'POST':

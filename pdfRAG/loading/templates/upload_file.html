@@ -1,5 +1,6 @@
 <div>
     <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
         <input type="file" name="files" required multiple>
         <button type="submit">
             Upload

@@ -3,4 +3,5 @@ from loading import views
 
 urlpatterns = [
     path('add/', views.upload_files, name="add-file"),
+    path('delete/<str:pk>', views.remove_file, name="delete-file"),
 ]
