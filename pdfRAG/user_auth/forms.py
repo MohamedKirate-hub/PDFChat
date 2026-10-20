@@ -1,5 +1,5 @@
 from django import forms
-from user_auth.models import User
+from user_auth.models import User, UserRole
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 
@@ -31,6 +31,9 @@ class RegisterForm(forms.ModelForm):
     
     def save(self, commit=True):
         user = super().save(commit=False)
+        role_name = "user"
+        role, created = UserRole.objects.get_or_create(name=role_name)
+        user.role = role
         password = self.cleaned_data.get('password')
         user.set_password(password)
         if commit:
