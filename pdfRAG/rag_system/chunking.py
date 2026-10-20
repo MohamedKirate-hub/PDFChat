@@ -23,5 +23,8 @@ class DocsChunking:
                 documents.extend(loader.load())
         return self.text_splitter.split_documents(documents)
 
+    def _load_docs_django(self):
+        pass
+
     def get_documents(self) -> List:
         return self.documents

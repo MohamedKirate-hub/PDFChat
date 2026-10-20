@@ -3,8 +3,8 @@ from rag_system.generation import Generation
 from rag_system.chunking import DocsChunking
 
 class RagManager:
-    def __init__(self, documents):
-        self.chunks = DocsChunking(documents).get_documents()
+    def __init__(self, files_path):
+        self.chunks = DocsChunking(files_path).get_documents()
         self.retriever = HybridSearch(self.chunks)
         self.model = Generation()
 

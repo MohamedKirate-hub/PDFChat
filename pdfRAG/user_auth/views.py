@@ -6,7 +6,9 @@ from user_auth.forms import RegisterForm
 from loading.models import LoadingBase
 
 def home(request):
-    data = LoadingBase.objects.filter(user=request.user)
+    data = []
+    if request.user.is_authenticated:
+        data = LoadingBase.objects.filter(user=request.user)
     context = {'data': data}
     return render(request, 'home.html', context)
 
