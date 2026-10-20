@@ -1,0 +1,34 @@
+
+{% extends 'main.html' %}
+
+{% block title %} Uploaded Files | ChatBot {% endblock%}
+{% block content %}
+    <h1>My Uploaded Files</h1>
+
+    <div>
+        <a href="{% url 'add-file' %}">+ Add Files</a>
+    </div>
+
+    {% for category, file_list in files.items %}
+        <div>
+            <h2>{{ category|title }} Files</h2>
+
+            {% if file_list %}
+                <ul>
+                    {% for file_path, file in file_list %}
+                        <li>{{ file_path }}</li>
+                        <form action="{% url 'delete-file' file.id %}" method='post'>
+                            {% csrf_token %}
+                            <button type="submit">
+                                Delete
+                            </button>
+                        </form>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No {{ category }} files uploaded yet.</p>
+            {% endif %}
+        </div>
+    {% endfor %}
+
+{% endblock %}

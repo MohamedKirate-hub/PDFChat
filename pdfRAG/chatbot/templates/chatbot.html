@@ -1,25 +1,31 @@
-<div>
-    <div>
-        {% for message in conversations %}
-            {% if message.owner.role == 'assistant' %}
-                <div>
-                    <p>AI</p>
-                    <p>{{message.body}}</p>
-                </div>
-            {% else %}
-                <div>
-                    <p>{{message.owner.username}}</p>
-                    <p>{{message.body}}</p>
-                </div>
-            {% endif %}
-        {% endfor %}
-    </div>
+{% extends "main.html" %}
 
+{% block title %}Chat | ChatBot{% endblock%}
+
+{% block content %}
     <div>
-        <form method="post">
-            {% csrf_token %}
-            <input type="text" name="query" required>
-            <button type="sunmit">Send</button>
-        </form>
+        <div>
+            {% for message in conversations %}
+                {% if message.owner.role == 'assistant' %}
+                    <div>
+                        <p>AI</p>
+                        <p>{{message.body}}</p>
+                    </div>
+                {% else %}
+                    <div>
+                        <p>{{message.owner.username}}</p>
+                        <p>{{message.body}}</p>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <div>
+            <form method="post">
+                {% csrf_token %}
+                <input type="text" name="query" required>
+                <button type="sunmit">Send</button>
+            </form>
+        </div>
     </div>
-</div>
+{% endblock %}

@@ -6,8 +6,8 @@ from user_auth.forms import RegisterForm
 def logout_view(request):
     if request.method == 'POST':
         logout(request)
-        return redirect('home')
-    return redirect('home')
+        return redirect('home-view')
+    return redirect('home-view')
 
 def login_view(request):
     page = 'login'
@@ -20,7 +20,7 @@ def login_view(request):
             user = authenticate(request, username=username, password=password)
             if user:
                 login(request, user)
-                return redirect('home')
+                return redirect('home-view')
 
     context = {'page': page, 'form': form}
     return render(request, 'login_register.html', context)
@@ -33,7 +33,7 @@ def register_view(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('home')
+            return redirect('home-view')
 
     context = {'page': page, 'form': form}
     return render(request, 'login_register.html', context)
