@@ -12,18 +12,30 @@ def see_files(request):
     data = LoadingBase.objects.get(user=request.user)
     upload_dir = Path(settings.UPLOAD_DIR)
     storage = FileSystemStorage(location=str(upload_dir))
-    files_path = []
+
+    files_path = {"pdf": [],
+                  "markdown": [],
+                  "text": []}
+
     for file in data.files.all():
         if storage.exists(file.file_path):
-            files_path.append(upload_dir / file.file_path)
+            file_path = Path(upload_dir / file.file_path)
+            suffix = file_path.suffix
+            if suffix == ".pdf":
+                files_path["pdf"].append(str(file_path))
+            elif suffix == ".md":
+                files_path["markdown"].append(str(file_path))
+            else:
+                files_path["text"].append(str(file_path))
 
-    return render(request, 'test.html')
+    context = {"files": files_path}
+    return render(request, 'uploaded.html', context)
 
 @login_required(login_url='login')
 def chatbot(request):
     if LoadingBase.objects.filter(user=request.user).exists():
         data = LoadingBase.objects.get(user=request.user)
-        conversation, created = ConversationRoom.objects.get_or_create(owner=request.user)
+        conversation, _ = ConversationRoom.objects.get_or_create(owner=request.user)
         upload_dir = Path(settings.UPLOAD_DIR)
         files_path = []
 
