@@ -8,6 +8,10 @@ from django.contrib.auth.decorators import login_required
 from user_auth.models import User, UserRole
 from chatbot.models import ConversationRoom, Message
 
+def home_view(request):
+    return render(request, 'home.html')
+
+@login_required(login_url='login')
 def see_files(request):
     data = LoadingBase.objects.get(user=request.user)
     upload_dir = Path(settings.UPLOAD_DIR)

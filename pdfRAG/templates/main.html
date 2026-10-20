@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}ChatBot{% endblock %}</title>
+    {% block extra_css %}{% endblock %}
+    {% include 'navbar.html' %} 
+
+    <main class="main-wrapper">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    {% include 'footer.html' %}
+</head>
+<body>
+    
+</body>
+</html>
