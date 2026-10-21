@@ -6,7 +6,7 @@ from rag_system.system import RagManager
 from pathlib import Path
 from django.contrib.auth.decorators import login_required
 from user_auth.models import User, UserRole
-from chatbot.models import ConversationRoom, Message
+from chatbot.models import Conversation, Message
 
 def home_view(request):
     return render(request, 'home.html')
@@ -15,14 +15,14 @@ def home_view(request):
 def chatbot(request):
     if LoadingBase.objects.filter(user=request.user).exists():
         data = LoadingBase.objects.get(user=request.user)
-        conversation, _ = ConversationRoom.objects.get_or_create(owner=request.user)
+        conversation, _ = Conversation.objects.get_or_create(owner=request.user)
         upload_dir = Path(settings.UPLOAD_DIR)
         files_path = []
 
         for file in data.files.all():
             file_path = upload_dir / file.file_path
             files_path.append(str(file_path))
-
+        
         if request.method == 'POST':
             user_role = UserRole.objects.get(name="assistant")
             assistant = User.objects.get(role=user_role)

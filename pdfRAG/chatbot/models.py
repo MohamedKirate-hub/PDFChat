@@ -11,7 +11,7 @@ class Message(models.Model):
 #     message = models.ForeignKey(Message)
 #     created_at = models.DateTimeField(auto_now_add=True)
 
-class ConversationRoom(models.Model):
+class Conversation(models.Model):
     owner = models.OneToOneField(User, on_delete=models.CASCADE)
     conversations = models.ManyToManyField(Message)
     created_at = models.DateTimeField(auto_now_add=True)
