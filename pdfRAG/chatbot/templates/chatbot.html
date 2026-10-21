@@ -19,8 +19,8 @@
     <!-- Chat Messages Stream -->
     <div class="chat-messages">
         {% for message in conversations %}
-            {% if message.owner.role == 'assistant' %}
-                <!-- AI / Assistant Message -> LEFT SIDE (Avatar on Left) -->
+            {% if message.owner.role.name == 'assistant' %}
+                <!-- Assistant Message -> Left Side -->
                 <div class="msg-row msg-ai">
                     <div class="msg-avatar">⚡</div>
                     <div class="msg-bubble">
@@ -29,7 +29,7 @@
                     </div>
                 </div>
             {% else %}
-                <!-- User Message -> RIGHT SIDE (Avatar on Right) -->
+                <!-- User Message -> Right Side (Avatar on Right) -->
                 <div class="msg-row msg-user">
                     <div class="msg-bubble">
                         <div class="msg-sender">{{ message.owner.username }}</div>
@@ -55,14 +55,48 @@
                 type="text" 
                 name="query" 
                 placeholder="Ask something about your documents..." 
-                required 
                 autocomplete="off" 
                 class="chat-input"
             >
-            <select id="models" name="models" multiple>
-                <option value="qwen3">Qwen3</option>
-                <option value="gtp3">GPT3</option>
-            </select>
+            
+            <!-- Models Selector Container -->
+            <div class="model-selector-container">
+                <button type="button" id="models_button" class="model-trigger-btn">Models</button>
+                <select id="models" name="models" multiple class="model-dropdown-select" style="display: none;">
+                    <option value="Qwen/Qwen3-0.6B">Qwen3</option>
+                </select>
+                <script>
+                    const modelsButton = document.getElementById("models_button");
+                    const modelsSelection = document.getElementById("models");
+                    
+                    modelsSelection.addEventListener("change", () => {
+                        const selectedOptions = Array.from(modelsSelection.selectedOptions);
+                        if (selectedOptions.length > 0) {
+                            const modelNames = selectedOptions.map(option => option.text).join(", ");
+                            modelsButton.innerText = modelNames;
+                        } else {
+                            modelsButton.innerText = "Models";
+                        }
+                    });
+
+                    modelsButton.addEventListener("click", (e) => {
+                        e.stopPropagation();
+                        if (modelsSelection.style.display === "none") {
+                            modelsSelection.style.display = "block";
+                        } else {
+                            modelsSelection.style.display = "none";
+                        }
+                    });
+
+                    // Hide dropdown when clicking outside
+                    document.addEventListener("click", (e) => {
+                        if (!e.target.closest('.model-selector-container')) {
+                            modelsSelection.style.display = "none";
+                        }
+                    });
+                </script>
+            </div>
+
             <button type="submit" class="btn-chat-send">Send</button>
         </form>
     </div>

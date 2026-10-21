@@ -43,7 +43,10 @@ def chatbot(request, pk):
             user_role = UserRole.objects.get(name="assistant")
             assistant = User.objects.get(role=user_role)
             query = request.POST.get("query", "").strip()
+            model_name = request.POST.get("models","Qwen/Qwen3-0.6B")
+            print(model_name)
             if query:
+                # settings.MODEL_NAME = model_name
                 user_message = Message.objects.create(
                     owner = request.user,
                     body = query)
@@ -55,7 +58,7 @@ def chatbot(request, pk):
                     owner = assistant,
                     body = answer)
 
-                conversation.conversations.add(user_message, assistant_message)
+                conversation.conversations.add(assistant_message, user_message)
 
         context = {'conversations': conversation.conversations.all()}
         return render(request, "chatbot.html", context)
