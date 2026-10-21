@@ -21,8 +21,12 @@ def chatbot(request):
 
         for file in data.files.all():
             file_path = upload_dir / file.file_path
+            suffix = files_path.suffix
             files_path.append(str(file_path))
-        
+
+        if not files_path:
+            return redirect('add-file')
+
         if request.method == 'POST':
             user_role = UserRole.objects.get(name="assistant")
             assistant = User.objects.get(role=user_role)
