@@ -134,24 +134,113 @@ body {
 }
 
 /* ==========================================
-   Footer Styling
+   FOOTER STYLES
    ========================================== */
 .footer {
-  background-color: var(--bg-surface);
-  border-top: 1px solid var(--border-color);
-  padding: 1.25rem 0;
+  width: 100%;
+  background-color: #ffffff;
+  border-top: 1px solid #e2e8f0;
+  padding: 2.5rem 1.5rem;
   margin-top: auto;
+  box-sizing: border-box;
 }
 
 .footer-container {
-  max-width: 1200px;
+  max-width: 1100px;
   margin: 0 auto;
-  padding: 0 1.5rem;
-  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+  flex-wrap: wrap;
 }
 
-.footer-container p {
+/* Brand Section */
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: 380px;
+}
+
+.footer-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1e293b;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.footer-logo:hover {
+  opacity: 0.85;
+}
+
+.logo-icon {
+  font-size: 1.1rem;
+}
+
+.footer-tagline {
+  font-size: 0.875rem;
+  color: #64748b;
+  line-height: 1.5;
   margin: 0;
-  font-size: 0.825rem;
-  color: var(--text-muted);
+}
+
+.footer-copyright {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  margin-top: 0.5rem;
+}
+
+/* Links Section */
+.footer-links {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.footer-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #475569;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.footer-link:hover {
+  color: #3182ce;
+  background-color: #f1f5f9;
+}
+
+.footer-icon {
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.footer-link:hover .footer-icon {
+  transform: translateY(-1px);
+}
+
+/* Responsive Alignment */
+@media (max-width: 640px) {
+  .footer-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+
+  .footer-links {
+    width: 100%;
+    justify-content: flex-start;
+    gap: 1rem;
+  }
 }

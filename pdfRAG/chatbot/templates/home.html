@@ -12,47 +12,35 @@
     <!-- Hero Section -->
     <section class="hero-section">
         <div class="hero-badge">
-            <span class="badge-dot"></span> Intelligent RAG Retrieval Engine
+            <span class="badge-dot"></span> AI-Powered RAG Retrieval Engine
         </div>
-        
+
         <h1 class="hero-title">
             Search & Query Your <span class="highlight">Documents</span> with AI
         </h1>
-        
+
         <p class="hero-subtitle">
-            This project solves document search complexity by giving your files an instant AI assistant. 
-            Upload your HTML and text files to get precise answers restricted strictly to your database context.
+            Turn your documents into a searchable knowledge base with an AI-powered assistant.
+            Upload your HTML and text files, ask questions in natural language, and receive
+            context-aware answers grounded in the information available in your documents.
         </p>
 
         <div class="hero-actions">
             {% if request.user.is_authenticated %}
-                <a href="{% url 'conversations' %}" class="btn-hero-primary">Start Chatting</a>
-                <a href="{% url 'uploaded-files' %}" class="btn-hero-secondary">Manage Files</a>
+                <a href="{% url 'conversations' %}" class="btn-hero-primary">
+                    Start Chatting
+                </a>
+                <a href="{% url 'uploaded-files' %}" class="btn-hero-secondary">
+                    Manage Files
+                </a>
             {% else %}
-                <a href="{% url 'register' %}" class="btn-hero-primary">Get Started Free</a>
-                <a href="{% url 'login' %}" class="btn-hero-secondary">Sign In</a>
+                <a href="{% url 'register' %}" class="btn-hero-primary">
+                    Get Started Free
+                </a>
+                <a href="{% url 'login' %}" class="btn-hero-secondary">
+                    Sign In
+                </a>
             {% endif %}
-        </div>
-    </section>
-
-    <!-- Key Features Grid -->
-    <section class="features-grid">
-        <div class="feature-card">
-            <div class="feature-icon">📁</div>
-            <h3 class="feature-title">Scoped Data Answers</h3>
-            <p class="feature-desc">The model answers questions exclusively using the files stored inside your user database.</p>
-        </div>
-
-        <div class="feature-card">
-            <div class="feature-icon">⚡</div>
-            <h3 class="feature-title">Instant Retrieval</h3>
-            <p class="feature-desc">Perform fast context lookup and document parsing for efficient conversation workflows.</p>
-        </div>
-
-        <div class="feature-card">
-            <div class="feature-icon">🔒</div>
-            <h3 class="feature-title">Private & Isolated</h3>
-            <p class="feature-desc">Your uploaded files remain isolated to your personal account workspace.</p>
         </div>
     </section>
 </div>

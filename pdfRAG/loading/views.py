@@ -48,6 +48,9 @@ def availabel_files(request):
 
 @login_required(login_url='login')
 def upload_files(request):
+    allowed_files = {".md", ".txt", ".pdf"}
+    MAX_FILE_SIZE = 10 * 1024 * 1024
+
     if request.method == 'POST':
         upload_dir = Path(settings.UPLOAD_DIR)
         upload_dir.mkdir(parents=True, exist_ok=True)
@@ -55,7 +58,16 @@ def upload_files(request):
         data, created = LoadingBase.objects.get_or_create(user=request.user)
 
         for file in request.FILES.getlist('files'):
+            if storage.exists(file):
+                continue
             filename = Path(file.name).name
+            suffix = Path(file).suffix.lower()
+            if suffix not in allowed_files:
+                continue
+
+            if file.size > MAX_FILE_SIZE:
+                continue
+
             saved_name = storage.save(filename, file)
             loaded_file = LoadFile.objects.create(file_path=saved_name)
             data.files.add(loaded_file)
