@@ -94,6 +94,13 @@
                             modelsSelection.style.display = "none";
                         }
                     });
+
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const chatMessages = document.querySelector('.chat-messages');
+                        if (chatMessages) {
+                            chatMessages.scrollTop = chatMessages.scrollHeight;
+                        }
+                    });
                 </script>
             </div>
 
@@ -101,15 +108,4 @@
         </form>
     </div>
 </div>
-{% endblock %}
-
-{% block extra_js %}
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const chatMessages = document.querySelector('.chat-messages');
-        if (chatMessages) {
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-    });
-</script>
 {% endblock %}

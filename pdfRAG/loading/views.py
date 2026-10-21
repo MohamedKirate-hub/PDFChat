@@ -58,10 +58,8 @@ def upload_files(request):
         data, created = LoadingBase.objects.get_or_create(user=request.user)
 
         for file in request.FILES.getlist('files'):
-            if storage.exists(file):
-                continue
             filename = Path(file.name).name
-            suffix = Path(file).suffix.lower()
+            suffix = Path(file.name).suffix.lower()
             if suffix not in allowed_files:
                 continue
 
