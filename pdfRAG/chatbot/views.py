@@ -46,7 +46,7 @@ def chatbot(request, pk):
             model_name = request.POST.get("models","Qwen/Qwen3-0.6B")
             print(model_name)
             if query:
-                # settings.MODEL_NAME = model_name
+                settings.MODEL_NAME = model_name
                 user_message = Message.objects.create(
                     owner = request.user,
                     body = query)
