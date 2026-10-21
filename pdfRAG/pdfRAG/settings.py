@@ -128,6 +128,8 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media/'
 UPLOAD_DIR = "data/uploads"
 
+MODEL_NAME = "Qwen/Qwen3-0.6B"
+
 
 # Email
 # https://docs.djangoproject.com/en/6.1/topics/email/#topic-email-configuration

@@ -1,11 +1,12 @@
 from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
 from langchain_huggingface import HuggingFacePipeline
 from rag_system.augemntation import Augment
+from django.conf import settings
 
 class Generation:
     def __init__(self, history=None):
         self.history = history or []
-        self.model_name = "Qwen/Qwen3-0.6B"
+        self.model_name = settings.MODEL_NAME
         self.model = AutoModelForCausalLM.from_pretrained(self.model_name)
         self.tokenizer = AutoTokenizer.from_pretrained(self.model_name)
         self.pipeline = pipeline(

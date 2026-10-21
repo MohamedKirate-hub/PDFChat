@@ -20,32 +20,22 @@
     <div class="chat-messages">
         {% for message in conversations %}
             {% if message.owner.role == 'assistant' %}
-                <!-- AI / Assistant Message -->
-                <div class="chat-message assistant-message">
-                    <div class="message-avatar assistant-avatar">⚡</div>
-                    <div class="message-content">
-                        <div class="message-header">
-                            <span class="sender-name">AI Assistant</span>
-                        </div>
-                        <div class="message-body">
-                            {{ message.body }}
-                        </div>
+                <!-- AI / Assistant Message -> LEFT SIDE (Avatar on Left) -->
+                <div class="msg-row msg-ai">
+                    <div class="msg-avatar">⚡</div>
+                    <div class="msg-bubble">
+                        <div class="msg-sender">AI Assistant</div>
+                        <div class="msg-text">{{ message.body }}</div>
                     </div>
                 </div>
             {% else %}
-                <!-- User Message -->
-                <div class="chat-message user-message">
-                    <div class="message-avatar user-avatar">
-                        {{ message.owner.username|first|upper }}
+                <!-- User Message -> RIGHT SIDE (Avatar on Right) -->
+                <div class="msg-row msg-user">
+                    <div class="msg-bubble">
+                        <div class="msg-sender">{{ message.owner.username }}</div>
+                        <div class="msg-text">{{ message.body }}</div>
                     </div>
-                    <div class="message-content">
-                        <div class="message-header">
-                            <span class="sender-name">{{ message.owner.username }}</span>
-                        </div>
-                        <div class="message-body">
-                            {{ message.body }}
-                        </div>
-                    </div>
+                    <div class="msg-avatar">{{ message.owner.username|first|upper }}</div>
                 </div>
             {% endif %}
         {% empty %}
@@ -69,8 +59,23 @@
                 autocomplete="off" 
                 class="chat-input"
             >
+            <select id="models" name="models" multiple>
+                <option value="qwen3">Qwen3</option>
+                <option value="gtp3">GPT3</option>
+            </select>
             <button type="submit" class="btn-chat-send">Send</button>
         </form>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const chatMessages = document.querySelector('.chat-messages');
+        if (chatMessages) {
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+    });
+</script>
 {% endblock %}
