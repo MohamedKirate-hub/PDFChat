@@ -1,0 +1,56 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block title %}Conversations | ChatBot{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'chatbot/conversations.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="conversations-container">
+    <!-- Page Header -->
+    <div class="conversations-header">
+        <div class="header-text">
+            <h1 class="page-title">Chat Conversations</h1>
+            <p class="page-subtitle">Select a past thread or start a new AI document query.</p>
+        </div>
+        
+        <!-- Create New Conversation Form -->
+        <form action="{% url 'create-conversation' %}" method="post" class="create-conversation-form">
+            {% csrf_token %}
+            <button type="submit" class="btn-primary">
+                <span class="btn-icon">+</span> New Conversation
+            </button>
+        </form>
+    </div>
+
+    <!-- Conversations List Grid -->
+    <div class="conversations-grid">
+        {% for conversation in conversations %}
+            <div class="conversation-card">
+                <a href="{% url 'conversation-chat' conversation.pk %}" class="conversation-link">
+                    <div class="conversation-icon">💬</div>
+                    <div class="conversation-info">
+                        <h3 class="conversation-title">{{ conversation.title }}</h3>
+                        <span class="conversation-hint">Click to open chat</span>
+                    </div>
+                </a>
+                
+                <form action="{% url 'delete-conversation' conversation.pk %}" method="post" class="delete-form">
+                    {% csrf_token %}
+                    <button type="submit" class="btn-delete" title="Delete conversation" onclick="return confirm('Are you sure you want to delete this conversation?');">
+                        Delete
+                    </button>
+                </form>
+            </div>
+        {% empty %}
+            <div class="empty-state">
+                <div class="empty-icon">💭</div>
+                <h3 class="empty-title">No conversations yet</h3>
+                <p class="empty-text">Start a new conversation to query your uploaded database files.</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

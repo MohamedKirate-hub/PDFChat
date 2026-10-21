@@ -1,34 +1,61 @@
-
 {% extends 'main.html' %}
+{% load static %}
 
-{% block title %} Uploaded Files | ChatBot {% endblock%}
+{% block title %}Uploaded Files | ChatBot{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'loading/uploaded_files.css' %}">
+{% endblock %}
+
 {% block content %}
-    <h1>My Uploaded Files</h1>
-
-    <div>
-        <a href="{% url 'add-file' %}">+ Add Files</a>
+<div class="files-container">
+    <!-- Header Area -->
+    <div class="files-header">
+        <div class="header-text">
+            <h1 class="page-title">My Uploaded Files</h1>
+            <p class="page-subtitle">Manage documents ingested into your knowledge base.</p>
+        </div>
+        <a href="{% url 'add-file' %}" class="btn-primary">
+            <span class="btn-icon">+</span> Upload Files
+        </a>
     </div>
 
-    {% for category, file_list in files.items %}
-        <div>
-            <h2>{{ category|title }} Files</h2>
+    <!-- Category Groups -->
+    <div class="categories-list">
+        {% for category, file_list in files.items %}
+            <div class="category-section">
+                <div class="category-header">
+                    <h2 class="category-title">{{ category|title }} Files</h2>
+                    <span class="file-count-badge">{{ file_list|length }} file{% if file_list|length != 1 %}s{% endif %}</span>
+                </div>
 
-            {% if file_list %}
-                <ul>
-                    {% for file_path, file in file_list %}
-                        <li>{{ file_path }}</li>
-                        <form action="{% url 'delete-file' file.id %}" method='post'>
-                            {% csrf_token %}
-                            <button type="submit">
-                                Delete
-                            </button>
-                        </form>
-                    {% endfor %}
-                </ul>
-            {% else %}
-                <p>No {{ category }} files uploaded yet.</p>
-            {% endif %}
-        </div>
-    {% endfor %}
-
+                {% if file_list %}
+                    <ul class="file-grid">
+                        {% for file_path, file, file_size in file_list %}
+                            <li class="file-card">
+                                <div class="file-info">
+                                    <div class="file-icon">📄</div>
+                                    <div class="file-details">
+                                        <span class="file-name" title="{{ file_path }}">{{ file_path }}</span>
+                                        <span class="file-size">{{ file_size }}</span>
+                                    </div>
+                                </div>
+                                <form action="{% url 'delete-file' file.id %}" method="post" class="delete-form">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn-delete" title="Delete File" onclick="return confirm('Are you sure you want to delete this file?');">
+                                        Delete
+                                    </button>
+                                </form>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <div class="empty-state">
+                        <p class="empty-text">No {{ category }} files uploaded yet.</p>
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}

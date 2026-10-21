@@ -7,29 +7,44 @@ from django.conf import settings
 from django.views.decorators.http import require_POST
 from django.http import Http404
 
+def get_file_size(file_path: Path) -> str:
+    size = file_path.stat().st_size
+
+    units = ["B", "KB", "MB", "GB", "TB"]
+    index = 0
+
+    while size >= 1024 and index < len(units) - 1:
+        size /= 1024
+        index += 1
+
+    return f"{size:.2f} {units[index]}"
+
 @login_required(login_url='login')
 def availabel_files(request):
-    data = LoadingBase.objects.get(user=request.user)
-    upload_dir = Path(settings.UPLOAD_DIR)
-    storage = FileSystemStorage(location=str(upload_dir))
+    data = LoadingBase.objects.filter(user=request.user).first()
+    if data:
+        upload_dir = Path(settings.UPLOAD_DIR)
+        storage = FileSystemStorage(location=str(upload_dir))
 
-    files_path = {"pdf": [],
-                  "markdown": [],
-                  "text": []}
+        files_path = {"pdf": [],
+                    "markdown": [],
+                    "text": []}
 
-    for file in data.files.all():
-        if storage.exists(file.file_path):
-            file_path = Path(upload_dir / file.file_path)
-            suffix = file_path.suffix
-            if suffix == ".pdf":
-                files_path["pdf"].append((str(file_path), file))
-            elif suffix == ".md":
-                files_path["markdown"].append((str(file_path), file))
-            else:
-                files_path["text"].append(str(file_path))
+        for file in data.files.all():
+            if storage.exists(file.file_path):
+                file_path = Path(upload_dir / file.file_path)
+                suffix = file_path.suffix
+                file_size = get_file_size(file_path)
+                if suffix == ".pdf":
+                    files_path["pdf"].append((str(file_path), file, file_size))
+                elif suffix == ".md":
+                    files_path["markdown"].append((str(file_path), file, file_size))
+                else:
+                    files_path["text"].append((str(file_path), file, file_size))
 
-    context = {"files": files_path}
-    return render(request, 'uploaded.html', context)
+        context = {"files": files_path}
+        return render(request, 'uploaded.html', context)
+    return redirect('add-file')
 
 @login_required(login_url='login')
 def upload_files(request):

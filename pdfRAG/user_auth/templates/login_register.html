@@ -1,25 +1,80 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'user_auth/auth.css' %}">
+
 <div class="auth-container">
     <div class="auth-card">
-        <h1 class="auth-title">
-            {% if page == 'login' %}
-                Log in to your account
-            {% else %}
-                Create an account
-            {% endif %}
-        </h1>
+        <!-- Header Section -->
+        <div class="auth-header">
+            <div class="auth-logo">
+                <span class="logo-icon">⚡</span>
+            </div>
+            <h1 class="auth-title">
+                {% if page == 'login' %}
+                    Welcome back
+                {% else %}
+                    Create your account
+                {% endif %}
+            </h1>
+            <p class="auth-subtitle">
+                {% if page == 'login' %}
+                    Enter your credentials to access your workspace
+                {% else %}
+                    Get started with your file-based AI assistant
+                {% endif %}
+            </p>
+        </div>
 
-        <form method="post" class="auth-form">
+        <!-- Form Section -->
+        <form method="post" class="auth-form" novalidate>
             {% csrf_token %}
-            
+
+            <!-- Non-field / Top-level Form Errors -->
+            {% if form.non_field_errors %}
+                <div class="form-errors-global">
+                    {% for error in form.non_field_errors %}
+                        <p class="error-message">{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <!-- Form Fields -->
             <div class="form-fields">
-                {{ form.as_p }}
+                {% for field in form %}
+                    <div class="form-group {% if field.errors %}has-error{% endif %}">
+                        <label for="{{ field.id_for_label }}" class="form-label">
+                            {{ field.label }}
+                        </label>
+                        
+                        <div class="input-wrapper">
+                            {{ field }}
+                        </div>
+
+                        {% if field.help_text %}
+                            <small class="form-help-text">{{ field.help_text|safe }}</small>
+                        {% endif %}
+
+                        {% if field.errors %}
+                            <ul class="form-field-errors">
+                                {% for error in field.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+                {% endfor %}
             </div>
 
+            <!-- Submit Button -->
             <button type="submit" class="btn-auth-submit">
-                {% if page == 'login' %}Log in{% else %}Sign up{% endif %}
+                {% if page == 'login' %}
+                    Log in
+                {% else %}
+                    Create account
+                {% endif %}
             </button>
         </form>
 
+        <!-- Footer / Toggle View Section -->
         <div class="auth-footer">
             {% if page == 'login' %}
                 <p>Don't have an account? <a href="{% url 'register' %}" class="auth-link">Sign up</a></p>

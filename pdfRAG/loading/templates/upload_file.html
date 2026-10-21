@@ -1,9 +1,39 @@
-<div>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <input type="file" name="files" required multiple>
-        <button type="submit">
-            Upload
-        </button>
-    </form>
+{% extends 'main.html' %}
+{% load static %}
+
+{% block title %}Upload Files - DocuRAG{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'loading/upload_file.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="upload-page-container">
+    <div class="upload-card">
+        <!-- Header Section -->
+        <div class="upload-header">
+            <h1 class="upload-title">Upload Documents</h1>
+            <p class="upload-subtitle">Upload HTML files or documents for your RAG knowledge base.</p>
+        </div>
+
+        <!-- Upload Form -->
+        <form method="post" enctype="multipart/form-data" class="upload-form">
+            {% csrf_token %}
+            
+            <label for="file-input" class="drop-zone">
+                <div class="drop-zone-content">
+                    <div class="upload-icon">📁</div>
+                    <span class="drop-zone-title">Click or drag files here to upload</span>
+                    <span class="drop-zone-hint">Supports multiple HTML files and documents</span>
+                </div>
+                <input type="file" id="file-input" name="files" class="file-input" required multiple>
+            </label>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn-upload-submit">
+                <span>Upload Files</span>
+            </button>
+        </form>
+    </div>
 </div>
+{% endblock %}

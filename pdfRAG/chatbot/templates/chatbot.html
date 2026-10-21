@@ -1,31 +1,76 @@
-{% extends "main.html" %}
+{% extends 'main.html' %}
+{% load static %}
 
-{% block title %}Chat | ChatBot{% endblock%}
+{% block title %}Chat | ChatBot{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'chatbot/chat.css' %}">
+{% endblock %}
 
 {% block content %}
-    <div>
-        <div>
-            {% for message in conversations %}
-                {% if message.owner.role == 'assistant' %}
-                    <div>
-                        <p>AI</p>
-                        <p>{{message.body}}</p>
-                    </div>
-                {% else %}
-                    <div>
-                        <p>{{message.owner.username}}</p>
-                        <p>{{message.body}}</p>
-                    </div>
-                {% endif %}
-            {% endfor %}
-        </div>
-
-        <div>
-            <form method="post">
-                {% csrf_token %}
-                <input type="text" name="query" required>
-                <button type="sunmit">Send</button>
-            </form>
-        </div>
+<div class="chat-container">
+    <!-- Top Navigation & Header -->
+    <div class="chat-header">
+        <a href="{% url 'conversations' %}" class="btn-back">
+            <span class="back-arrow">&larr;</span> Back to Conversations
+        </a>
     </div>
+
+    <!-- Chat Messages Stream -->
+    <div class="chat-messages">
+        {% for message in conversations %}
+            {% if message.owner.role == 'assistant' %}
+                <!-- AI / Assistant Message -->
+                <div class="chat-message assistant-message">
+                    <div class="message-avatar assistant-avatar">⚡</div>
+                    <div class="message-content">
+                        <div class="message-header">
+                            <span class="sender-name">AI Assistant</span>
+                        </div>
+                        <div class="message-body">
+                            {{ message.body }}
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <!-- User Message -->
+                <div class="chat-message user-message">
+                    <div class="message-avatar user-avatar">
+                        {{ message.owner.username|first|upper }}
+                    </div>
+                    <div class="message-content">
+                        <div class="message-header">
+                            <span class="sender-name">{{ message.owner.username }}</span>
+                        </div>
+                        <div class="message-body">
+                            {{ message.body }}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% empty %}
+            <div class="chat-empty-state">
+                <div class="empty-icon">💡</div>
+                <h3>Ask a question about your files</h3>
+                <p>Type your query below to search and generate responses based on your uploaded documents.</p>
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- Bottom Query Bar -->
+    <div class="chat-input-wrapper">
+        <form method="post" class="chat-form">
+            {% csrf_token %}
+            <input 
+                type="text" 
+                name="query" 
+                placeholder="Ask something about your documents..." 
+                required 
+                autocomplete="off" 
+                class="chat-input"
+            >
+            <button type="submit" class="btn-chat-send">Send</button>
+        </form>
+    </div>
+</div>
 {% endblock %}
