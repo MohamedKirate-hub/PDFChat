@@ -7,6 +7,7 @@ requires-python = ">=3.14"
 dependencies = [
     "chromadb>=1.5.9",
     "django>=6.1.2",
+    "fastapi>=0.159.1",
     "langchain>=1.4.6",
     "langchain-community>=0.4.2",
     "langchain-huggingface>=1.2.3",
@@ -16,4 +17,5 @@ dependencies = [
     "rank-bm25>=0.2.2",
     "sentence-transformers>=6.1.0",
     "transformers>=5.20.1",
+    "uvicorn>=0.54.0",
 ]

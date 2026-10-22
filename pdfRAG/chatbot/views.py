@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from user_auth.models import User, UserRole
 from chatbot.models import Conversation, Message, ConversationRoom
 from django.views.decorators.http import require_POST
+import requests
 
 def home_view(request):
     return render(request, 'home.html')
@@ -44,15 +45,21 @@ def chatbot(request, pk):
             assistant = User.objects.get(role=user_role)
             query = request.POST.get("query", "").strip()
             model_name = request.POST.get("models","Qwen/Qwen3-0.6B")
-            print(model_name)
             if query:
                 settings.MODEL_NAME = model_name
                 user_message = Message.objects.create(
                     owner = request.user,
                     body = query)
         
-                rag_system = RagManager(files_path)
-                answer = rag_system.generate(query)
+                # rag_system = RagManager(files_path)
+                # answer = rag_system.generate(query)
+                answer = requests.post(
+                    "127.0.0.1:8011/api/query",
+                    json={
+                        "file_paths": files_path,
+                        "query": query
+                    }
+                )
 
                 assistant_message = Message.objects.create(
                     owner = assistant,
