@@ -1,14 +1,12 @@
 from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
 from langchain_huggingface import HuggingFacePipeline
 from rag_system.augemntation import Augment
-from django.conf import settings
 
 class Generation:
-    def __init__(self, history=None):
+    def __init__(self, model_name: str, history=None):
         self.history = history or []
-        self.model_name = settings.MODEL_NAME
-        self.model = AutoModelForCausalLM.from_pretrained(self.model_name)
-        self.tokenizer = AutoTokenizer.from_pretrained(self.model_name)
+        self.model = AutoModelForCausalLM.from_pretrained(model_name)
+        self.tokenizer = AutoTokenizer.from_pretrained(model_name)
         self.pipeline = pipeline(
             task = "text-generation",
             model = self.model, tokenizer = self.tokenizer,

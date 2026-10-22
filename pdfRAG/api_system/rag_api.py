@@ -6,6 +6,7 @@ from typing import List
 class RequestInput(BaseModel):
     query: str
     file_paths: List[str]
+    model_name: str = ""
     # user_id: str
     # conversation_id: str
 
@@ -17,7 +18,7 @@ app = FastAPI(title="RAG System API")
 @app.post("/api/query", response_model=RequestOutput)
 async def rag_system_api(Data: RequestInput):
     try:
-        rag_system = RagManager(Data.file_paths)
+        rag_system = RagManager(Data.model_name, Data.file_paths)
         response = rag_system.generate(Data.query)
         return RequestOutput(answer=response)
 

@@ -46,13 +46,10 @@ def chatbot(request, pk):
             query = request.POST.get("query", "").strip()
             model_name = request.POST.get("models","Qwen/Qwen3-0.6B")
             if query:
-                settings.MODEL_NAME = model_name
                 user_message = Message.objects.create(
                     owner = request.user,
                     body = query)
-        
-                # rag_system = RagManager(files_path)
-                # answer = rag_system.generate(query)
+
                 try:
                     response = requests.post(
                         "http://127.0.0.1:8011/api/query",
@@ -60,8 +57,7 @@ def chatbot(request, pk):
                             "file_paths": files_path,
                             "query": query,
                             "model_name": model_name,
-                        },
-                        timeout=120,
+                        }
                     )
                     response.raise_for_status()
                     result = response.json()
