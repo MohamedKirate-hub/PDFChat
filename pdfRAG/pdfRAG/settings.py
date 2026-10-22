@@ -127,6 +127,7 @@ AUTH_USER_MODEL = "user_auth.User"
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media/'
 UPLOAD_DIR = "data/uploads"
+FILES_CACHE_PATH = "data/cache/files_cache.json"
 
 
 # Email

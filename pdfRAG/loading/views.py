@@ -2,22 +2,11 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from loading.models import LoadFile, LoadingBase
 from django.core.files.storage import FileSystemStorage
-from pathlib import Path
 from django.conf import settings
 from django.views.decorators.http import require_POST
 from django.http import Http404
-
-def get_file_size(file_path: Path) -> str:
-    size = file_path.stat().st_size
-
-    units = ["B", "KB", "MB", "GB", "TB"]
-    index = 0
-
-    while size >= 1024 and index < len(units) - 1:
-        size /= 1024
-        index += 1
-
-    return f"{size:.2f} {units[index]}"
+from pathlib import Path
+from utils.utils import get_file_size, file_caching
 
 @login_required(login_url='login')
 def availabel_files(request):
@@ -55,15 +44,20 @@ def upload_files(request):
         upload_dir = Path(settings.UPLOAD_DIR)
         upload_dir.mkdir(parents=True, exist_ok=True)
         storage = FileSystemStorage(location=upload_dir)
-        data, created = LoadingBase.objects.get_or_create(user=request.user)
+        data, _ = LoadingBase.objects.get_or_create(user=request.user)
 
         for file in request.FILES.getlist('files'):
+            
             filename = Path(file.name).name
             suffix = Path(file.name).suffix.lower()
+
             if suffix not in allowed_files:
                 continue
 
             if file.size > MAX_FILE_SIZE:
+                continue
+
+            if file_caching(file):
                 continue
 
             saved_name = storage.save(filename, file)
