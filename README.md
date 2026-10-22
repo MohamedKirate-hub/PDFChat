@@ -18,6 +18,53 @@ PDFChat supports PDF, Markdown, and plain-text files, making it useful for askin
 - **Web interface:** Provides an interface built with HTML and CSS.
 - **Django backend:** Handles authentication, document management, and application logic.
 
+
+## Application Screenshots
+
+### Home Page
+
+The main interface of PDFChat.
+
+![Home Page](assets/home_page.png)
+
+### Login Page
+
+Secure authentication for existing users.
+
+![Login Page](assets/login_page.png)
+
+### Register Page
+
+Create an account to start using PDFChat.
+
+![Register Page](assets/register_page.png)
+
+### Uploaded Files
+
+View the documents associated with your account.
+
+![Uploaded Files](assets/uploaded_files.png)
+
+### Upload Documents
+
+Upload PDF, Markdown, and plain-text files to use as context for your conversations.
+
+![Upload File](assets/upload_file.png)
+
+### Conversations
+
+Access and manage your conversations.
+
+![Conversations](assets/conversations.png)
+
+### Chat with Your Documents
+
+Ask questions about your uploaded documents and receive answers generated using the RAG pipeline.
+
+![Chat Page](assets/chat.png)
+
+
+
 ## RAG Pipeline
 
 PDFChat uses a simple RAG architecture consisting of document processing, retrieval, prompt construction, and answer generation.
