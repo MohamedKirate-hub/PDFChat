@@ -14,8 +14,8 @@ class RequestOutput(BaseModel):
 
 app = FastAPI(title="RAG System API")
 
-@app.get("/api/query", response_model=RequestOutput)
-def rag_system_api(Data: RequestInput):
+@app.post("/api/query", response_model=RequestOutput)
+async def rag_system_api(Data: RequestInput):
     try:
         rag_system = RagManager(Data.file_paths)
         response = rag_system.generate(Data.query)

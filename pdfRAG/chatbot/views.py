@@ -53,13 +53,25 @@ def chatbot(request, pk):
         
                 # rag_system = RagManager(files_path)
                 # answer = rag_system.generate(query)
-                answer = requests.post(
-                    "127.0.0.1:8011/api/query",
-                    json={
-                        "file_paths": files_path,
-                        "query": query
-                    }
-                )
+                try:
+                    response = requests.post(
+                        "http://127.0.0.1:8011/api/query",
+                        json={
+                            "file_paths": files_path,
+                            "query": query,
+                            "model_name": model_name,
+                        },
+                        timeout=120,
+                    )
+                    response.raise_for_status()
+                    result = response.json()
+                    answer = result["answer"]
+
+                except requests.RequestException:
+                    answer = (
+                        "I couldn't connect to the RAG service. "
+                        "Please try again later."
+                    )
 
                 assistant_message = Message.objects.create(
                     owner = assistant,
