@@ -56,8 +56,9 @@ def upload_files(request):
 
             if file.size > MAX_FILE_SIZE:
                 continue
-
-            if file_caching(file):
+            
+            file_name = upload_dir / Path(file.name)
+            if file_caching(file_name):
                 continue
 
             saved_name = storage.save(filename, file)

@@ -16,8 +16,8 @@ def load_json(file_path: str | Path):
     if not isinstance(file_path, str):
         file_path = Path(file_path)
 
-    if file_path.stat().st_size == 0:
-        return {}
+    if not file_path.exists() or file_path.stat().st_size == 0:
+        return dict()
 
     with file_path.open('r') as file:
         data = json.load(file)
@@ -27,23 +27,29 @@ def save_json(file_path: str | Path, data):
     if not isinstance(file_path, str):
         file_path = Path(file_path)
     with file_path.open('w') as file:
+        print(file_path)
+        print(data)
         json.dump(data, file)
 
 def file_caching(file_path: str) -> bool:
-    print(f"file_path: {file_path}")
     files_cache_path = Path(settings.FILES_CACHE_PATH)
     files_cache_path.mkdir(parents=True, exist_ok=True)
+    files_cache_path = files_cache_path / 'files_cache.json'
+
     if not files_cache_path.is_dir():
         files_cache_path.touch(exist_ok=True)
+
     files_data = load_json(files_cache_path)
+    print(f"Data: {files_data}")
 
     content = Path(file_path).read_bytes()
-    if file_path not in files_data.keys():
-        files_data[file_path] = content_hash
+    content_hash = hashlib.sha256(content).hexdigest()
+    print(files_data)
+    if file_path.name not in files_data.keys():
+        files_data[file_path.name] = content_hash
         save_json(files_cache_path, files_data)
         return True
 
-    content_hash = hashlib.sha256(content)
     if content_hash != files_data[file_path]:
         files_data[file_path] = content_hash
         save_json(files_cache_path, files_data)
