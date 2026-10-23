@@ -38,6 +38,7 @@
                                     <div class="file-details">
                                         <span class="file-name" title="{{ file_path }}">{{ file_path }}</span>
                                         <span class="file-size">{{ file_size }}</span>
+                                        <span>{{ file.created_at|timesince }}</span>
                                     </div>
                                 </div>
                                 <form action="{% url 'delete-file' file.id %}" method="post" class="delete-form">
