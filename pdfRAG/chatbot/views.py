@@ -49,9 +49,11 @@ def chatbot(request, pk):
                     owner = request.user,
                     body = query)
 
+                conversation.title = query
+
                 try:
                     response = requests.post(
-                        "http://127.0.0.1:9000/api/query",
+                        "http://127.0.0.1:8011/api/query",
                         json={
                             "file_paths": files_path,
                             "query": query,

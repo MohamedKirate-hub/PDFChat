@@ -24,7 +24,10 @@
                 <div class="msg-row msg-ai">
                     <div class="msg-avatar">⚡</div>
                     <div class="msg-bubble">
-                        <div class="msg-sender">AI Assistant</div>
+                        <div class="msg-sender">
+                            <span class="sender-name">AI Assistant</span>
+                            <span class="msg-time">{{ message.created_at|timesince }} ago</span>
+                        </div>
                         <div class="msg-text">{{ message.body }}</div>
                     </div>
                 </div>
@@ -32,7 +35,10 @@
                 <!-- User Message -> Right Side (Avatar on Right) -->
                 <div class="msg-row msg-user">
                     <div class="msg-bubble">
-                        <div class="msg-sender">{{ message.owner.username }}</div>
+                        <div class="msg-sender">
+                            <span class="sender-name">{{ message.owner.username }}</span>
+                            <span class="msg-time">{{ message.created_at|timesince }} ago</span>
+                        </div>
                         <div class="msg-text">{{ message.body }}</div>
                     </div>
                     <div class="msg-avatar">{{ message.owner.username|first|upper }}</div>
@@ -63,50 +69,52 @@
             <div class="model-selector-container">
                 <button type="button" id="models_button" class="model-trigger-btn">Models</button>
                 <select id="models" name="models" multiple class="model-dropdown-select" style="display: none;">
-                    <option value="Qwen/Qwen3-0.6B">Qwen3-06.B</option>
+                    <option value="Qwen/Qwen3-0.6B">Qwen3-0.6B</option>
                     <option value="Qwen/Qwen2.5-1.5B-Instruct">Qwen2.5-1.5B-Instruct</option>                    
                 </select>
-                <script>
-                    const modelsButton = document.getElementById("models_button");
-                    const modelsSelection = document.getElementById("models");
-                    
-                    modelsSelection.addEventListener("change", () => {
-                        const selectedOptions = Array.from(modelsSelection.selectedOptions);
-                        if (selectedOptions.length > 0) {
-                            const modelNames = selectedOptions.map(option => option.text).join(", ");
-                            modelsButton.innerText = modelNames;
-                        } else {
-                            modelsButton.innerText = "Models";
-                        }
-                    });
-
-                    modelsButton.addEventListener("click", (e) => {
-                        e.stopPropagation();
-                        if (modelsSelection.style.display === "none") {
-                            modelsSelection.style.display = "block";
-                        } else {
-                            modelsSelection.style.display = "none";
-                        }
-                    });
-
-                    // Hide dropdown when clicking outside
-                    document.addEventListener("click", (e) => {
-                        if (!e.target.closest('.model-selector-container')) {
-                            modelsSelection.style.display = "none";
-                        }
-                    });
-
-                    document.addEventListener('DOMContentLoaded', function() {
-                        const chatMessages = document.querySelector('.chat-messages');
-                        if (chatMessages) {
-                            chatMessages.scrollTop = chatMessages.scrollHeight;
-                        }
-                    });
-                </script>
             </div>
 
             <button type="submit" class="btn-chat-send">Send</button>
         </form>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Model Dropdown Logic
+        const modelsButton = document.getElementById("models_button");
+        const modelsSelection = document.getElementById("models");
+        
+        if (modelsSelection && modelsButton) {
+            modelsSelection.addEventListener("change", () => {
+                const selectedOptions = Array.from(modelsSelection.selectedOptions);
+                if (selectedOptions.length > 0) {
+                    const modelNames = selectedOptions.map(option => option.text).join(", ");
+                    modelsButton.innerText = modelNames;
+                } else {
+                    modelsButton.innerText = "Models";
+                }
+            });
+
+            modelsButton.addEventListener("click", (e) => {
+                e.stopPropagation();
+                modelsSelection.style.display = modelsSelection.style.display === "none" ? "block" : "none";
+            });
+
+            document.addEventListener("click", (e) => {
+                if (!e.target.closest('.model-selector-container')) {
+                    modelsSelection.style.display = "none";
+                }
+            });
+        }
+
+        // Auto-scroll chat messages to bottom
+        const chatMessages = document.querySelector('.chat-messages');
+        if (chatMessages) {
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+    });
+</script>
 {% endblock %}

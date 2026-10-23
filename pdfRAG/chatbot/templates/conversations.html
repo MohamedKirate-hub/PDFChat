@@ -33,7 +33,10 @@
                     <div class="conversation-icon">💬</div>
                     <div class="conversation-info">
                         <h3 class="conversation-title">{{ conversation.title }}</h3>
-                        <span class="conversation-hint">Click to open chat</span>
+                        <div class="conversation-meta">
+                            <span class="conversation-hint">Click to open chat</span>
+                            <span class="conversation-time">{{ conversation.created_at|timesince }} ago</span>
+                        </div>
                     </div>
                 </a>
                 

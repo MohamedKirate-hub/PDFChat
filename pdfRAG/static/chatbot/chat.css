@@ -240,3 +240,27 @@
 .btn-chat-send:hover {
     background: #2b6cb0;
 }
+
+.msg-sender {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    width: 100%;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+    opacity: 0.85;
+}
+
+.msg-user .msg-sender {
+    color: #ebf8ff;
+    text-align: left; /* overridden by flex space-between */
+}
+
+.msg-time {
+    font-size: 0.68rem !important;
+    font-weight: 400 !important;
+    opacity: 0.75 !important;
+    white-space: nowrap;
+    margin-left: 12px;
+}

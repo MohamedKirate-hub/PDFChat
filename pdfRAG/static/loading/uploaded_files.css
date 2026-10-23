@@ -195,3 +195,32 @@
   font-size: 0.875rem;
   color: var(--text-muted);
 }
+
+.file-info-link {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    flex: 1;
+    text-decoration: none;
+    color: inherit;
+    min-width: 0;
+}
+
+.file-details {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    gap: 0.15rem;
+}
+
+.file-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.75rem;
+    color: var(--text-muted, #64748b);
+}
+
+.file-time {
+    opacity: 0.85;
+}
