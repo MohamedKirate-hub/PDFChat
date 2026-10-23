@@ -1,3 +1,5 @@
 from django.contrib import admin
+from loading.models import LoadFile, LoadingBase
 
-# Register your models here.
+admin.site.register(LoadingBase)
+admin.site.register(LoadFile)

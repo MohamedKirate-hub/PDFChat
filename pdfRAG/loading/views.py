@@ -6,7 +6,7 @@ from django.conf import settings
 from django.views.decorators.http import require_POST
 from django.http import Http404
 from pathlib import Path
-from utils.utils import get_file_size, file_caching
+from utils.utils import get_file_size, file_caching, delete_cache
 
 @login_required(login_url='login')
 def availabel_files(request):
@@ -57,10 +57,11 @@ def upload_files(request):
             if file.size > MAX_FILE_SIZE:
                 continue
             
-            file_name = upload_dir / Path(file.name)
             saved_name = storage.save(filename, file)
-            # if file_caching(file_name):
-            #     continue
+            file_name = upload_dir / saved_name
+            if not file_caching(file_name):
+                storage.delete(saved_name)
+                continue
 
             loaded_file = LoadFile.objects.create(file_path=saved_name)
             data.files.add(loaded_file)
@@ -82,4 +83,5 @@ def remove_file(request, pk):
     )
     storage.delete(file.file_path)
     file.delete()
+    delete_cache(file.file_path)
     return redirect('uploaded-files')

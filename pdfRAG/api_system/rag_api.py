@@ -6,9 +6,7 @@ from typing import List
 class RequestInput(BaseModel):
     query: str
     file_paths: List[str]
-    model_name: str = ""
-    # user_id: str
-    # conversation_id: str
+    model_name: str
 
 class RequestOutput(BaseModel):
     answer: str

@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from loading.models import LoadingBase
 from django.conf import settings
-from rag_system.system import RagManager
 from pathlib import Path
 from django.contrib.auth.decorators import login_required
 from user_auth.models import User, UserRole
@@ -52,7 +51,7 @@ def chatbot(request, pk):
 
                 try:
                     response = requests.post(
-                        "http://127.0.0.1:8011/api/query",
+                        "http://127.0.0.1:9000/api/query",
                         json={
                             "file_paths": files_path,
                             "query": query,
@@ -63,7 +62,8 @@ def chatbot(request, pk):
                     result = response.json()
                     answer = result["answer"]
 
-                except requests.RequestException:
+                except requests.RequestException as e:
+                    print(e)
                     answer = (
                         "I couldn't connect to the RAG service. "
                         "Please try again later."

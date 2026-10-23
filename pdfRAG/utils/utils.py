@@ -16,7 +16,7 @@ def load_json(file_path: str | Path):
     if not isinstance(file_path, str):
         file_path = Path(file_path)
 
-    if not file_path.exists() or file_path.stat().st_size == 0:
+    if file_path.stat().st_size == 0:
         return dict()
 
     with file_path.open('r') as file:
@@ -27,30 +27,32 @@ def save_json(file_path: str | Path, data):
     if not isinstance(file_path, str):
         file_path = Path(file_path)
     with file_path.open('w') as file:
-        print(file_path)
-        print(data)
-        json.dump(data, file)
+        json.dump(data, file, indent=4)
 
 def file_caching(file_path: str) -> bool:
-    files_cache_path = Path(settings.FILES_CACHE_PATH)
-    files_cache_path.mkdir(parents=True, exist_ok=True)
-    files_cache_path = files_cache_path / 'files_cache.json'
+    cache_path = Path(settings.FILES_CACHE_PATH)
+    cache_path.mkdir(parents=True, exist_ok=True)
+    cache_path = cache_path / settings.CACHE_FILE
 
-    if not files_cache_path.is_dir():
-        files_cache_path.touch(exist_ok=True)
+    if not cache_path.exists():
+        cache_path.touch()
 
-    files_data = load_json(files_cache_path)
-    print(f"Data: {files_data}")
+    files_data = load_json(cache_path)
 
     content = Path(file_path).read_bytes()
     content_hash = hashlib.sha256(content).hexdigest()
-    if str(file_path.name) not in files_data.keys():
-        files_data[str(file_path.name)] = str(content_hash)
-        save_json(files_cache_path, files_data)
-        return True
+    cache_key = file_path.name
 
-    if content_hash != files_data[file_path]:
-        files_data[file_path] = content_hash
-        save_json(files_cache_path, files_data)
-        return True
-    return False
+    if content_hash in files_data.values():
+        return False
+
+    files_data[cache_key] = content_hash
+    save_json(cache_path, files_data)
+    return True
+
+def delete_cache(file_path: str):
+    cache_path = Path(settings.FILES_CACHE_PATH) / settings.CACHE_FILE
+    cache = load_json(cache_path)
+    if file_path in cache:
+        cache.pop(file_path)
+    save_json(cache_path, cache)
