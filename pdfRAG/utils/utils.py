@@ -44,9 +44,8 @@ def file_caching(file_path: str) -> bool:
 
     content = Path(file_path).read_bytes()
     content_hash = hashlib.sha256(content).hexdigest()
-    print(files_data)
-    if file_path.name not in files_data.keys():
-        files_data[file_path.name] = content_hash
+    if str(file_path.name) not in files_data.keys():
+        files_data[str(file_path.name)] = str(content_hash)
         save_json(files_cache_path, files_data)
         return True
 

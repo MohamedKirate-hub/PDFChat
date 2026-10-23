@@ -58,10 +58,10 @@ def upload_files(request):
                 continue
             
             file_name = upload_dir / Path(file.name)
-            if file_caching(file_name):
-                continue
-
             saved_name = storage.save(filename, file)
+            # if file_caching(file_name):
+            #     continue
+
             loaded_file = LoadFile.objects.create(file_path=saved_name)
             data.files.add(loaded_file)
 
