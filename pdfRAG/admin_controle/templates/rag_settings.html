@@ -3,7 +3,7 @@
 
 {% block extrastyle %}
     {{ block.super }}
-    <link rel="stylesheet" href="{% static 'admin_controle/rag_config.css' %}?v=4">
+    <link rel="stylesheet" href="{% static 'admin_controle/rag_config.css' %}?v=5">
 {% endblock %}
 
 {% block content %}
@@ -79,14 +79,10 @@
             </div>
         </fieldset>
 
-        <div class="submit-row">
-            <input type="submit" value="Save Configuration" class="default">
-        </div>
-
-        <div class="submit-row">
-            <a href="{% url 'home-view' %}">
-                Back Home
-            </a>
+        <!-- Combined Action Buttons Row -->
+        <div class="submit-row action-buttons-row">
+            <input type="submit" value="Save Configuration" class="default btn-primary">
+            <a href="{% url 'home-view' %}" class="btn-secondary">Back Home</a>
         </div>
     </form>
 </div>
