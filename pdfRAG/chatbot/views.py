@@ -51,7 +51,7 @@ def chatbot(request, pk):
             user_role = UserRole.objects.get(name="assistant")
             assistant = User.objects.get(role=user_role)
             query = request.POST.get("query", "").strip()
-            model_name = request.POST.get("models","Qwen/Qwen3-0.6B")
+            model_name = request.POST.get("models", "nvidia/nemotron-3.5-super-vl:free")
             if query:
                 user_message = Message.objects.create(
                     owner = request.user,

@@ -33,5 +33,8 @@ class Generation:
             json=self.payload
         )
         result = response.json()
+        print("\n\n\n\n\n")
+        print(result)
+        print("\n\n\n\n\n")
         answer = result["choices"][0]["message"]["content"]
         return answer
