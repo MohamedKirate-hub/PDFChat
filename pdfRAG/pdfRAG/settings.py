@@ -129,6 +129,8 @@ MEDIA_ROOT = BASE_DIR / 'media/'
 UPLOAD_DIR = "data/uploads"
 FILES_CACHE_PATH = "data/cache"
 CACHE_FILE = "files_cache.json"
+LOGS_DIR = "data/logs"
+LOGS_FILE = "logs.txt"
 
 
 # Email

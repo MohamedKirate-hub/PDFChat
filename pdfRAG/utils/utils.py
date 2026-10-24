@@ -2,6 +2,40 @@ from django.conf import settings
 import json
 import hashlib
 from pathlib import Path
+from datetime import datetime
+
+class LogsInfo:
+    def __init__(self, content: str, type: str, status_code=None):
+        self.content = content
+        self.type = type
+        self.logs_dir = Path(settings.LOGS_DIR)
+        self.logs_path = self.logs_dir / Path(settings.LOGS_FILE)
+        self.logs_dir.mkdir(parents=True, exist_ok=True)
+        if not self.logs_path.exists():
+            self.logs_path.touch()
+    
+    def _create_content(self):
+        time = datetime.now()
+        message = (f"Time: {time} | "
+                   f"From: {self.type.upper()} | "
+                   f"HTTP: {self.status_code or 'N/A'} | "
+                   f"Issue: {self.content}")
+        return message
+
+    def _save_content(self, file_path: Path, content: str):
+        with file_path.open('a', encoding='utf-8') as file:
+            file.write(content)
+
+    def _show_logs(self, file_path: Path):
+        with file_path.open('r', encoding='utf-8') as file:
+            return file.readlines()
+
+    def save(self):
+        message = self._create_content()
+        self._save_content(self.logs_path, message)
+
+    def show(self):
+        return self._show_logs(self.logs_path)
 
 def get_file_size(file_path: Path) -> str:
     size = file_path.stat().st_size
