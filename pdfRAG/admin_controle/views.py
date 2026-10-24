@@ -33,6 +33,7 @@ def rag_control(request):
             return redirect("rag-settings")
 
     save_json(config_path, data)
+    print(data)
     return redirect("conversations")
 
 @staff_member_required

@@ -4,10 +4,10 @@ from pathlib import Path
 from typing import List
 
 class DocsChunking:
-    def __init__(self, file_paths: List) -> None:
+    def __init__(self, file_paths: List, chunk_size, chunk_overlap) -> None:
         self.file_paths = file_paths
-        self.text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000,
-                                                            chunk_overlap=200)
+        self.text_splitter = RecursiveCharacterTextSplitter(chunk_size=chunk_size,
+                                                            chunk_overlap=chunk_overlap)
         self.documents = self._load_docs()
 
     def _load_docs(self):

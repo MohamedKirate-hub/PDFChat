@@ -1,6 +1,12 @@
 {
-    "type": "hybrid",
-    "top_k": 5,
-    "b": 0.75,
-    "k1": 1.5
+    "chunk_conf": {
+        "chunk_size": 1100,
+        "overlap_size": 200
+    },
+    "retriever_conf": {
+        "type": "bm25",
+        "top_k": 5,
+        "b": 0.75,
+        "k1": 1.5
+    }
 }
