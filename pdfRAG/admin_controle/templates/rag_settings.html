@@ -3,7 +3,7 @@
 
 {% block extrastyle %}
     {{ block.super }}
-    <link rel="stylesheet" href="{% static 'admin_controle/rag_config.css' %}?v=1">
+    <link rel="stylesheet" href="{% static 'admin_controle/rag_config.css' %}?v=4">
 {% endblock %}
 
 {% block content %}
@@ -13,7 +13,29 @@
     <form action="{% url 'admin_controle:rag-control' %}" method="post">
         {% csrf_token %}
 
+        <!-- Chunking Settings Section -->
         <fieldset class="module aligned">
+            <h2 class="section-title">Chunking Settings</h2>
+            
+            <div class="form-row">
+                <label for="chunk_size">Chunk size:</label>
+                <input type="number" name="chunk_size" id="chunk_size"
+                       min="64" max="4096" step="64"
+                       value="{{ config.chunk_size|default:1000 }}">
+            </div>
+
+            <div class="form-row">
+                <label for="overlap_size">Overlap size:</label>
+                <input type="number" name="overlap" id="overlap_size"
+                       min="0" max="1024" step="16"
+                       value="{{ config.overlap|default:200 }}">
+            </div>
+        </fieldset>
+
+        <!-- Retrieval Strategy Section -->
+        <fieldset class="module aligned">
+            <h2 class="section-title">Retrieval Strategy Settings</h2>
+
             <div class="form-row">
                 <label for="retrieve">Retrieval strategy:</label>
                 <select name="retriever" id="retrieve">
@@ -33,7 +55,7 @@
             </div>
 
             <div class="form-row">
-                <label for="top_k">Top k: </label>
+                <label for="top_k">Top k:</label>
                 <input type="number" name="top_k" id="top_k"
                        min="1" max="20" step="1"
                        value="{{ config.top_k|default:5 }}">
