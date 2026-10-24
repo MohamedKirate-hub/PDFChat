@@ -6,7 +6,7 @@ class RagManager:
     def __init__(self, model_name:str, files_path, data = dict()):
         print(data)
         self.chunks = DocsChunking(files_path).get_documents()
-        self.retriever_type = data.get("retriever", "hybrid")
+        self.retriever_type = data.get("type", "hybrid")
 
         if self.retriever_type == "semantic":
             self.retriever = SemanticSearch(self.chunks)

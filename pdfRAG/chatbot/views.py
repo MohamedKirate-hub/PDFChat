@@ -58,7 +58,7 @@ def chatbot(request, pk):
                     body = query)
 
                 conversation.title = query
-
+                conversation.save() 
                 try:
                     response = requests.post(
                         "http://127.0.0.1:8011/api/query",
