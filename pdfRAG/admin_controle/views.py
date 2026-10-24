@@ -13,7 +13,7 @@ def rag_control(request):
     config_dir.mkdir(parents=True, exist_ok=True)
     config_path.touch(exist_ok=True)
     retrieve_type = request.POST.get("retriever", "hybrid")
-    top_k = request.POST.get("top_k", 5)
+    top_k = int(request.POST.get("top_k", 5))
     data = {"type": retrieve_type, 'top_k': top_k}
 
     if retrieve_type in {"hybrid", "bm25"}:
