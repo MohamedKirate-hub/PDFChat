@@ -15,7 +15,7 @@ class Generation:
             "Content-Type": "application/json",
         }
         self.payload = {
-            "model": "nvidia/nemotron-3.5-super-vl:free",
+            "model": model_name,
             "messages": [],
         }
 
