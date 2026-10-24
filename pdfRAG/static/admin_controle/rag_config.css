@@ -1,0 +1,102 @@
+.rag-config-container {
+    max-width: 650px;
+    margin: 2rem auto;
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 12px !important;
+    padding: 2rem !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+    color: #1e293b !important;
+}
+
+.rag-config-container h1 {
+    font-size: 1.5rem !important;
+    font-weight: 700 !important;
+    color: #1e293b !important;
+    margin-top: 0 !important;
+    margin-bottom: 1.5rem !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+    padding-bottom: 0.75rem !important;
+    background: transparent !important;
+}
+
+.rag-config-container fieldset.module {
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.rag-config-container .form-row {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.4rem !important;
+    padding: 1rem 0 !important;
+    border-bottom: 1px solid #f1f5f9 !important;
+    background: transparent !important;
+}
+
+.rag-config-container .form-row:last-child {
+    border-bottom: none !important;
+}
+
+.rag-config-container label {
+    font-size: 0.9rem !important;
+    font-weight: 600 !important;
+    color: #475569 !important;
+    float: none !important;
+    width: auto !important;
+}
+
+.rag-config-container select,
+.rag-config-container input[type="number"] {
+    padding: 0.65rem 0.85rem !important;
+    border: 1px solid #cbd5e0 !important;
+    border-radius: 8px !important;
+    font-size: 0.95rem !important;
+    color: #1e293b !important;
+    background-color: #fafbfc !important;
+    outline: none !important;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+    max-width: 300px !important;
+    height: auto !important;
+}
+
+.rag-config-container select:focus,
+.rag-config-container input[type="number"]:focus {
+    border-color: #4f46e5 !important;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1) !important;
+    background-color: #ffffff !important;
+}
+
+.rag-config-container .submit-row {
+    margin-top: 2rem !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    display: flex !important;
+    justify-content: flex-start !important;
+}
+
+.rag-config-container input.default {
+    background-color: #4f46e5 !important;
+    color: #ffffff !important;
+    border: none !important;
+    padding: 0.65rem 1.5rem !important;
+    border-radius: 8px !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease !important;
+    float: none !important;
+    height: auto !important;
+}
+
+.rag-config-container input.default:hover {
+    background-color: #4338ca !important;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2) !important;
+}
+
+#bm25-parameters {
+    transition: all 0.3s ease;
+}
+

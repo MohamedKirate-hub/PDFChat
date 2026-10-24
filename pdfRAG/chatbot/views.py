@@ -5,8 +5,16 @@ from pathlib import Path
 from django.contrib.auth.decorators import login_required
 from user_auth.models import User, UserRole
 from chatbot.models import Conversation, Message, ConversationRoom
-from django.views.decorators.http import require_POST
+from django.views.decorators.http import require_POST, require_GET
 import requests
+from django.http import JsonResponse
+from utils.utils import load_json
+
+@require_GET
+def extract_parameters(request):
+    config_path = Path(settings.RAG_CONFIG_DIR) / settings.RAG_CONFIG_PATH
+    data = load_json(config_path)
+    return JsonResponse(data)
 
 def home_view(request):
     return render(request, 'home.html')

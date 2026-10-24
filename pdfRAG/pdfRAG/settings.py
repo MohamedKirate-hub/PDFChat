@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "user_auth",
     "loading",
     "chatbot",
+    "admin_controle",
 ]
 
 MIDDLEWARE = [
@@ -129,9 +130,9 @@ MEDIA_ROOT = BASE_DIR / 'media/'
 UPLOAD_DIR = "data/uploads"
 FILES_CACHE_PATH = "data/cache"
 CACHE_FILE = "files_cache.json"
-LOGS_DIR = "data/logs"
-LOGS_FILE = "logs.txt"
 
+RAG_CONFIG_DIR = "data/parameters"
+RAG_CONFIG_PATH = "paramerters.json"
 
 # Email
 # https://docs.djangoproject.com/en/6.1/topics/email/#topic-email-configuration

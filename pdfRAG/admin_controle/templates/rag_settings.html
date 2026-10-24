@@ -1,0 +1,85 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block extrastyle %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'admin_controle/rag_config.css' %}?v=1">
+{% endblock %}
+
+{% block content %}
+<div class="rag-config-container">
+    <h1>RAG Configuration</h1>
+
+    <form action="{% url 'admin_controle:rag-control' %}" method="post">
+        {% csrf_token %}
+
+        <fieldset class="module aligned">
+            <div class="form-row">
+                <label for="retrieve">Retrieval strategy:</label>
+                <select name="retriever" id="retrieve">
+                    <option value="hybrid"
+                        {% if config.type == "hybrid" %}selected{% endif %}>
+                        Hybrid Search
+                    </option>
+                    <option value="semantic"
+                        {% if config.type == "semantic" %}selected{% endif %}>
+                        Semantic Search
+                    </option>
+                    <option value="bm25"
+                        {% if config.type == "bm25" %}selected{% endif %}>
+                        BM25 Search
+                    </option>
+                </select>
+            </div>
+
+            <div class="form-row">
+                <label for="top_k">Top k: </label>
+                <input type="number" name="top_k" id="top_k"
+                       min="1" max="20" step="1"
+                       value="{{ config.top_k|default:5 }}">
+            </div>
+
+            <!-- Wrapped BM25 Parameters -->
+            <div id="bm25-parameters">
+                <div class="form-row">
+                    <label for="k1">BM25 k1:</label>
+                    <input type="number" name="k1" id="k1"
+                           min="0.1" max="3" step="0.1"
+                           value="{{ config.k1|default:1.5 }}">
+                </div>
+
+                <div class="form-row">
+                    <label for="b">BM25 b:</label>
+                    <input type="number" name="b" id="b"
+                           min="0" max="1" step="0.05"
+                           value="{{ config.b|default:0.75 }}">
+                </div>
+            </div>
+        </fieldset>
+
+        <div class="submit-row">
+            <input type="submit" value="Save Configuration" class="default">
+        </div>
+    </form>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const retrieveSelect = document.getElementById('retrieve');
+        const bm25Params = document.getElementById('bm25-parameters');
+
+        function toggleBM25Fields() {
+            const selectedStrategy = retrieveSelect.value;
+            
+            if (selectedStrategy === 'bm25' || selectedStrategy === 'hybrid') {
+                bm25Params.style.display = 'block';
+            } else {
+                bm25Params.style.display = 'none';
+            }
+        }
+
+        toggleBM25Fields();
+        retrieveSelect.addEventListener('change', toggleBM25Fields);
+    });
+</script>
+{% endblock %}

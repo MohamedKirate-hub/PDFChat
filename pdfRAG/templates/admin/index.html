@@ -1,0 +1,11 @@
+{% extends "admin/index.html" %}
+
+{% block content %}
+<div style="margin-bottom: 20px;">
+    <a href="{% url 'admin_controle:rag-settings' %}">
+        Configure RAG Retrieval
+    </a>
+</div>
+
+{{ block.super }}
+{% endblock %}

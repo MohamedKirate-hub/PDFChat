@@ -7,4 +7,5 @@ urlpatterns = [
     path('chatbot/create', views.create_conversation, name='create-conversation'),
     path('chatbot/<str:pk>/delete', views.delete_conversation, name="delete-conversation"),
     path('chatbot/<str:pk>/conversation', views.chatbot, name='conversation-chat'),
+    path('chatbot/fetch-parameters', views.extract_parameters)
 ]

@@ -1,6 +1,5 @@
 from django.conf import settings
 import json
-import hashlib
 from pathlib import Path
 from datetime import datetime
 
@@ -8,8 +7,9 @@ class LogsInfo:
     def __init__(self, content: str, type: str, status_code=None):
         self.content = content
         self.type = type
-        self.logs_dir = Path(settings.LOGS_DIR)
-        self.logs_path = self.logs_dir / Path(settings.LOGS_FILE)
+        self.status_code = status_code
+        self.logs_dir = Path("data/logs")
+        self.logs_path = self.logs_dir / Path("logs.txt")
         self.logs_dir.mkdir(parents=True, exist_ok=True)
         if not self.logs_path.exists():
             self.logs_path.touch()
@@ -60,33 +60,9 @@ def load_json(file_path: str | Path):
 def save_json(file_path: str | Path, data):
     if not isinstance(file_path, str):
         file_path = Path(file_path)
+
+    if file_path.exists():
+        file_path.touch()
+
     with file_path.open('w') as file:
         json.dump(data, file, indent=4)
-
-def file_caching(file_path: str) -> bool:
-    cache_path = Path(settings.FILES_CACHE_PATH)
-    cache_path.mkdir(parents=True, exist_ok=True)
-    cache_path = cache_path / settings.CACHE_FILE
-
-    if not cache_path.exists():
-        cache_path.touch()
-
-    files_data = load_json(cache_path)
-
-    content = Path(file_path).read_bytes()
-    content_hash = hashlib.sha256(content).hexdigest()
-    cache_key = file_path.name
-
-    if content_hash in files_data.values():
-        return False
-
-    files_data[cache_key] = content_hash
-    save_json(cache_path, files_data)
-    return True
-
-def delete_cache(file_path: str):
-    cache_path = Path(settings.FILES_CACHE_PATH) / settings.CACHE_FILE
-    cache = load_json(cache_path)
-    if file_path in cache:
-        cache.pop(file_path)
-    save_json(cache_path, cache)
