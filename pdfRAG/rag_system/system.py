@@ -1,5 +1,5 @@
 from rag_system.retrieval import HybridSearch, SemanticSearch, BM25Search
-from rag_system.generation import Generation
+from rag_system.api_gen import Generation
 from rag_system.chunking import DocsChunking
 
 class RagManager:

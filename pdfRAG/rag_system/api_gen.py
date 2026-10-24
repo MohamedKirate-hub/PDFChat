@@ -1,6 +1,7 @@
-import os
+from rag_system.augemntation import Augment
 from dotenv import load_dotenv
 import requests
+import os
 
 load_dotenv()
 
@@ -18,17 +19,14 @@ class Generation:
             "messages": [],
         }
 
-        # self.llm = HuggingFacePipeline(pipeline=self.pipeline)
-    
     def set_documents(self, documents):
         self.documents = documents
         self.augment = Augment(self.documents, self.history)
-    
-    def generate(self, query):
-        prompt_template = self.augment.build_prompt(query)
 
-    
+    def generate(self, query):
+        prompt_template = self.augment.build_prompt(query)    
         self.payload["messages"] = prompt_template
+
         response = requests.post(
             self.url,
             headers=self.header,
@@ -36,5 +34,4 @@ class Generation:
         )
         result = response.json()
         answer = result["choices"][0]["message"]["content"]
-        print(answer)
         return answer
