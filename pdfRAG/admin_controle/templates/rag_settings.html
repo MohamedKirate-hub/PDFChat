@@ -20,14 +20,14 @@
             <div class="form-row">
                 <label for="chunk_size">Chunk size:</label>
                 <input type="number" name="chunk_size" id="chunk_size"
-                       min="64" max="4096" step="64"
+                       min="200" max="4096" step="100"
                        value="{{ config.chunk_size|default:1000 }}">
             </div>
 
             <div class="form-row">
                 <label for="overlap_size">Overlap size:</label>
                 <input type="number" name="overlap" id="overlap_size"
-                       min="0" max="1024" step="16"
+                       min="0" max="1024" step="10"
                        value="{{ config.overlap|default:200 }}">
             </div>
         </fieldset>

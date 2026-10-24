@@ -12,16 +12,23 @@ def rag_control(request):
     config_path = config_dir / settings.RAG_CONFIG_PATH
     config_dir.mkdir(parents=True, exist_ok=True)
     config_path.touch(exist_ok=True)
+
     retrieve_type = request.POST.get("retriever", "hybrid")
     top_k = int(request.POST.get("top_k", 5))
-    data = {"type": retrieve_type, 'top_k': top_k}
+    chunk_size = int(request.POST.get("chunk_size", 1000))
+    overlap_size = int(request.POST.get("overlap_size", 200))
+    data = {
+        "chunk_conf": {"chunk_size": chunk_size, "overlap_size": overlap_size},
+        "retriever_conf":{"type": retrieve_type, 'top_k': top_k}
+        }
 
     if retrieve_type in {"hybrid", "bm25"}:
         try:
             b = float(request.POST.get("b", 0.75))
             k1 = float(request.POST.get("k1", 1.5))
-            data["b"] = b
-            data["k1"] = k1
+            data["retriever_conf"]["b"] = b
+            data["retriever_conf"]["k1"] = k1
+
         except ValueError:
             return redirect("rag-settings")
 

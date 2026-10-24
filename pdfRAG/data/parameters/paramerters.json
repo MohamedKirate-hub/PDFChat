@@ -1,5 +1,5 @@
 {
-    "type": "bm25",
+    "type": "hybrid",
     "top_k": 5,
     "b": 0.75,
     "k1": 1.5

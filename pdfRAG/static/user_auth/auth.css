@@ -25,183 +25,242 @@ body {
   color: var(--text-main);
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
-.auth-container {
-  width: 100%;
-  max-width: 440px;
-  padding: 1.5rem;
-  box-sizing: border-box;
+/* ==========================================
+   1. Navbar Component Styles
+   ========================================== */
+.navbar {
+    background-color: var(--bg-surface);
+    border-bottom: 1px solid var(--border-color);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
 }
 
-.auth-card {
-  background-color: var(--bg-surface);
-  border: 1px solid var(--border-color);
-  border-radius: 16px;
-  padding: 2.5rem 2rem;
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0.85rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
-/* Header Elements */
-.auth-header {
-  text-align: center;
-  margin-bottom: 2rem;
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: var(--text-main);
+    letter-spacing: -0.025em;
+    transition: opacity 0.2s ease;
 }
 
-.auth-logo {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 48px;
-  height: 48px;
-  background-color: var(--bg-input);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  margin-bottom: 1rem;
-  font-size: 1.25rem;
+.nav-brand:hover {
+    opacity: 0.85;
 }
 
-.auth-title {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--text-main);
-  margin: 0 0 0.5rem 0;
-  letter-spacing: -0.025em;
+.brand-icon {
+    font-size: 1.2rem;
+    line-height: 1;
 }
 
-.auth-subtitle {
-  font-size: 0.875rem;
-  color: var(--text-muted);
-  margin: 0;
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
 }
 
-/* Form Fields */
-.auth-form {
-  display: flex;
-  flex-direction: column;
+.nav-link {
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 0.5rem 0.85rem;
+    border-radius: 6px;
+    transition: all 0.2s ease;
 }
 
-.form-fields {
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
+.nav-link:hover {
+    color: var(--text-main);
+    background-color: var(--bg-input);
 }
 
-.form-group {
-  display: flex;
-  flex-direction: column;
+.nav-logout-form {
+    margin: 0;
+    display: inline;
 }
 
-.form-label {
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--text-main);
-  margin-bottom: 0.5rem;
+.btn-nav-logout {
+    background-color: transparent;
+    color: var(--text-muted);
+    border: 1px solid var(--border-color);
+    padding: 0.45rem 0.85rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
 }
 
-/* Input Widget Styling */
-.form-group input {
-  width: 100%;
-  padding: 0.75rem 1rem;
-  background-color: var(--bg-input);
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  color: var(--text-main);
-  font-size: 0.95rem;
-  box-sizing: border-box;
-  outline: none;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+.btn-nav-logout:hover {
+    background-color: var(--danger-bg);
+    border-color: #fecaca;
+    color: var(--danger-color);
 }
 
-.form-group input:focus {
-  background-color: #ffffff;
-  border-color: var(--accent-secondary);
-  box-shadow: 0 0 0 3px rgba(8, 145, 178, 0.15);
+.btn-nav-register {
+    background-color: var(--accent-primary);
+    color: #ffffff;
+    padding: 0.5rem 1.1rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* Field Validation Errors & Help Text */
-.form-group.has-error input {
-  border-color: var(--danger-color);
-  background-color: var(--danger-bg);
+.btn-nav-register:hover {
+    background-color: var(--accent-primary-hover);
+    box-shadow: 0 4px 12px var(--accent-glow);
 }
 
-.form-help-text {
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  margin-top: 0.375rem;
-  line-height: 1.4;
+/* ==========================================
+   2. RAG Configuration Panel Styles
+   ========================================== */
+.rag-config-container {
+  max-width: 650px;
+  margin: 2.5rem auto;
+  background-color: var(--bg-surface) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: 16px !important;
+  padding: 2.5rem 2rem !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01) !important;
+  color: var(--text-main) !important;
 }
 
-.form-field-errors,
-.form-errors-global {
-  list-style: none;
-  padding: 0;
-  margin: 0.375rem 0 0 0;
+.rag-config-container h1 {
+  font-size: 1.5rem !important;
+  font-weight: 700 !important;
+  color: var(--text-main) !important;
+  margin-top: 0 !important;
+  margin-bottom: 1.5rem !important;
+  border-bottom: 1px solid var(--border-color) !important;
+  padding-bottom: 0.875rem !important;
+  letter-spacing: -0.025em !important;
+  background: transparent !important;
 }
 
-.form-field-errors li,
-.error-message {
-  font-size: 0.8125rem;
-  color: var(--danger-color);
+.rag-config-container h2.section-title {
+  font-size: 1.1rem !important;
+  font-weight: 600 !important;
+  color: var(--text-main) !important;
+  margin: 1.5rem 0 0.5rem 0 !important;
+  padding-bottom: 0.5rem !important;
+  border-bottom: 1px solid var(--border-color) !important;
+  background: transparent !important;
 }
 
-.form-errors-global {
-  background-color: var(--danger-bg);
-  border: 1px solid var(--danger-color);
-  border-radius: 8px;
-  padding: 0.75rem;
-  margin-bottom: 1.25rem;
+.rag-config-container fieldset.module {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 0 1rem 0 !important;
 }
 
-/* Button & Actions */
-.btn-auth-submit {
-  width: 100%;
-  padding: 0.85rem;
-  background-color: var(--accent-primary);
-  color: #ffffff;
-  border: none;
-  border-radius: 8px;
-  font-size: 0.95rem;
-  font-weight: 600;
-  cursor: pointer;
-  margin-top: 1.5rem;
-  transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
+.rag-config-container .form-row {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.4rem !important;
+  padding: 0.875rem 0 !important;
+  border-bottom: 1px solid var(--border-color) !important;
+  background: transparent !important;
 }
 
-.btn-auth-submit:hover {
-  background-color: var(--accent-primary-hover);
-  box-shadow: 0 4px 12px var(--accent-glow);
+.rag-config-container .form-row:last-child {
+  border-bottom: none !important;
 }
 
-.btn-auth-submit:active {
-  transform: translateY(1px);
+.rag-config-container label {
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+  color: var(--text-main) !important;
+  float: none !important;
+  width: auto !important;
 }
 
-/* Footer Links */
-.auth-footer {
-  margin-top: 2rem;
-  padding-top: 1.25rem;
-  border-top: 1px solid var(--border-color);
-  text-align: center;
+.rag-config-container select,
+.rag-config-container input[type="number"] {
+  width: 100% !important;
+  max-width: 320px !important;
+  padding: 0.75rem 1rem !important;
+  background-color: var(--bg-input) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: 8px !important;
+  color: var(--text-main) !important;
+  font-size: 0.95rem !important;
+  line-height: 1.4 !important;
+  box-sizing: border-box !important;
+  outline: none !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease !important;
+  height: auto !important;
+  min-height: 42px !important;
 }
 
-.auth-footer p {
-  margin: 0;
-  font-size: 0.875rem;
-  color: var(--text-muted);
+.rag-config-container select {
+  appearance: auto !important;
+  -webkit-appearance: select !important;
+  padding-right: 2rem !important;
+  cursor: pointer !important;
 }
 
-.auth-link {
-  color: var(--accent-secondary);
-  text-decoration: none;
-  font-weight: 600;
-  transition: color 0.2s ease;
+.rag-config-container select:focus,
+.rag-config-container input[type="number"]:focus {
+  background-color: #ffffff !important;
+  border-color: var(--accent-secondary) !important;
+  box-shadow: 0 0 0 3px rgba(8, 145, 178, 0.15) !important;
 }
 
-.auth-link:hover {
-  color: var(--accent-primary);
-  text-decoration: underline;
+.rag-config-container .submit-row {
+  margin-top: 2rem !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  display: flex !important;
+  justify-content: flex-start !important;
+  float: none !important;
+}
+
+.rag-config-container input.default {
+  background-color: var(--accent-primary) !important;
+  color: #ffffff !important;
+  border: none !important;
+  padding: 0.85rem 1.75rem !important;
+  border-radius: 8px !important;
+  font-size: 0.95rem !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  float: none !important;
+  height: auto !important;
+  line-height: normal !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05) !important;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease !important;
+}
+
+.rag-config-container input.default:hover {
+  background-color: var(--accent-primary-hover) !important;
+  box-shadow: 0 4px 12px var(--accent-glow) !important;
+}
+
+.rag-config-container input.default:active {
+  transform: translateY(1px) !important;
+}
+
+#bm25-parameters {
+  transition: all 0.3s ease;
 }
