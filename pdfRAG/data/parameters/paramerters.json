@@ -1,6 +1,6 @@
 {
     "chunk_conf": {
-        "chunk_size": 1100,
+        "chunk_size": 2000,
         "overlap_size": 200
     },
     "retriever_conf": {
