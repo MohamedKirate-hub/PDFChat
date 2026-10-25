@@ -1,4 +1,4 @@
-from langchain_community.document_loaders import PyPDFLoader, TextLoader
+from langchain_community.document_loaders import PyPDFLoader, TextLoader, CSVLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from pathlib import Path
 from typing import List
@@ -15,12 +15,19 @@ class DocsChunking:
         for file_path in self.file_paths:
             path = Path(file_path)
             suffix = path.suffix.lower()
+
             if suffix == ".pdf":
-                loader = PyPDFLoader(str(path))
+                loader = PyPDFLoader(str(path), encoding="utf-8")
                 documents.extend(loader.load())
+
             elif suffix in [".txt", ".md"]:
-                loader = TextLoader(str(path))
+                loader = TextLoader(str(path), encoding="utf-8")
                 documents.extend(loader.load())
+
+            elif suffix == ".csv":
+                loader = CSVLoader(file_path=str(path), encoding="utf-8")
+                documents.extend(loader.load())
+
         return self.text_splitter.split_documents(documents)
 
     def _load_docs_django(self):

@@ -17,7 +17,8 @@ def availabel_files(request):
 
         files_path = {"pdf": [],
                     "markdown": [],
-                    "text": []}
+                    "text": [],
+                    "csv": []}
 
         for file in data.files.all():
             if storage.exists(file.file_path):
@@ -28,6 +29,8 @@ def availabel_files(request):
                     files_path["pdf"].append((str(file_path), file, file_size))
                 elif suffix == ".md":
                     files_path["markdown"].append((str(file_path), file, file_size))
+                elif suffix == ".csv":
+                    files_path["csv"].append((str(file_path), file, file_size))
                 else:
                     files_path["text"].append((str(file_path), file, file_size))
 
@@ -37,7 +40,7 @@ def availabel_files(request):
 
 @login_required(login_url='login')
 def upload_files(request):
-    allowed_files = {".md", ".txt", ".pdf"}
+    allowed_files = {".md", ".txt", ".pdf", ".csv"}
     MAX_FILE_SIZE = 10 * 1024 * 1024
 
     if request.method == 'POST':
