@@ -1,0 +1,26 @@
+**I’m excited to share my latest project: PDFChat — an AI-powered document chatbot!**
+
+I’ve been working on **PDFChat**, a project that allows users to upload their documents and ask questions about their content using Retrieval-Augmented Generation (RAG).
+
+The goal was to build a complete application that combines AI, backend development, and information retrieval.
+
+**Key features:**
+- Support for PDF, TXT, Markdown, and CSV files.
+- Three retrieval strategies: BM25, Semantic Search, and Hybrid Search.
+- Text generation using local Hugging Face models or APIs through OpenRouter.
+- An admin interface to configure chunk size, chunk overlap, and retrieval strategy.
+- A FastAPI service to execute the RAG pipeline through an API.
+- A Django web application with user authentication, document management, and chat conversations.
+
+**Technologies used:**
+Python, Django, FastAPI, LangChain, Hugging Face Transformers, Sentence Transformers, BM25, and OpenRouter.
+
+This project helped me better understand how RAG works in practice, how to combine keyword-based and semantic retrieval, and how to connect different backend services into one application.
+
+I’m continuing to improve the project and learn more about building practical AI applications.
+
+I’d appreciate any feedback or suggestions from the community!
+
+**GitHub repository:** https://github.com/MohamedKirate-hub/PDFChat
+
+#ArtificialIntelligence #RAG #Python #MachineLearning #Django #FastAPI #LangChain #GenerativeAI #BuildInPublic
