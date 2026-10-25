@@ -1,14 +1,13 @@
 <nav class="navbar">
     <div class="nav-container">
-        <!-- Brand Logo -->
+
         <a href="{% url 'home-view' %}" class="nav-brand">
-            <span class="brand-icon">⚡</span>
             <span class="brand-name">DocuRAG</span>
         </a>
 
-        <!-- Navigation Links -->
         <div class="nav-links">
             {% if request.user.is_staff %}
+            <a href="{% url 'admin:index' %}" class="nav-link">Diagnostics</a>
                 <a href="{% url 'admin_controle:rag-settings' %}" class="nav-link">Configure RAG</a>
             {% endif %}
 

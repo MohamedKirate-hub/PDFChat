@@ -125,14 +125,20 @@ STATICFILES_DIRS= [
     BASE_DIR / 'static'
 ]
 AUTH_USER_MODEL = "user_auth.User"
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media/'
+
 UPLOAD_DIR = "data/uploads"
+
 FILES_CACHE_PATH = "data/cache"
 CACHE_FILE = "files_cache.json"
 
 RAG_CONFIG_DIR = "data/parameters"
 RAG_CONFIG_PATH = "paramerters.json"
+
+LOGS_DIR = "data/logs"
+LOGS_PATH = "logs.txt"
 
 # Email
 # https://docs.djangoproject.com/en/6.1/topics/email/#topic-email-configuration

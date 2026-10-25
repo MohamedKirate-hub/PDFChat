@@ -1,10 +1,30 @@
 {% extends "admin/index.html" %}
+{% load static %}
+
+{% block extrastyle %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'admin_controle/dashboard.css' %}?v=1">
+{% endblock %}
 
 {% block content %}
-<div style="margin-bottom: 20px;">
-    <a href="{% url 'admin_controle:rag-settings' %}">
-        Configure RAG Retrieval
-    </a>
+<div class="admin-quick-actions">
+    <h2>DocuRAG Control Center</h2>
+    <div class="action-card-grid">
+
+        <a href="{% url 'admin_controle:rag-settings' %}" class="action-card">
+            <div class="action-info">
+                <h3>Configure RAG Retrieval</h3>
+            </div>
+        </a>
+        <p>Tune chunk sizes, overlap parameters, and search strategies</p>
+
+        <a href="{% url 'admin_controle:logs' %}" class="action-card">
+            <div class="action-info">
+                <h3>System Activity Logs</h3>
+            </div>
+        </a>
+        <p>Monitor runtime errors, connection exceptions, and traces</p>
+    </div>
 </div>
 
 {{ block.super }}

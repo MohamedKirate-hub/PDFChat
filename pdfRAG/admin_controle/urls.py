@@ -3,6 +3,7 @@ from admin_controle import views
 
 app_name = "admin_controle"
 urlpatterns = [
-    path('admin/rag-settings', views.rag_setting, name="rag-settings"),
-    path('admin/rag-settings/save', views.rag_control, name="rag-control"),
+    path('rag-settings', views.rag_setting, name="rag-settings"),
+    path('rag-settings/save', views.rag_control, name="rag-control"),
+    path('logs', views.log_info_view, name="logs"),
 ]

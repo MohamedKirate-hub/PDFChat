@@ -19,7 +19,7 @@ class LogsInfo:
         message = (f"Time: {time} | "
                    f"From: {self.type.upper()} | "
                    f"HTTP: {self.status_code or 'N/A'} | "
-                   f"Issue: {self.content}")
+                   f"Issue: {self.content}\n")
         return message
 
     def _save_content(self, file_path: Path, content: str):

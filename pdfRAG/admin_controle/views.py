@@ -39,3 +39,16 @@ def rag_control(request):
 @staff_member_required
 def rag_setting(request):
     return render(request, "rag_settings.html")
+
+@staff_member_required
+def log_info_view(request):
+    logs_dir = Path(settings.LOGS_DIR)
+    logs_path = logs_dir / settings.LOGS_PATH
+    logs_dir.mkdir(parents=True, exist_ok=True)
+    logs_path.touch(exist_ok=True)
+
+    with logs_path.open('r') as file:
+        logs = file.readlines()
+
+    context = {"logs": logs}
+    return render(request, 'logs.html', context)
