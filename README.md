@@ -255,7 +255,7 @@ This project uses the provided Makefile to install and synchronize dependencies 
 
 Follow the prompts to configure the account.
 
-### 5. Configure environment variables
+### 3. Configure environment variables
 
 Create a local `.env` file if the project configuration uses `python-dotenv`. Add the variables required by your implementation, for example:
 
@@ -267,7 +267,7 @@ RAG_API_URL=http://127.0.0.1:8011/api/query
 
 Do not commit `.env` files or real API keys. If your code uses different environment-variable names, use those names instead.
 
-### 6. Start the Django application
+### 4. Start the Django application
 
 ```bash
 cd pdfRAG
@@ -276,7 +276,7 @@ uv run python3 manage.py runserver
 
 Open [http://127.0.0.1:8000/](http://127.0.0.1:8000/) in your browser.
 
-### 7. Start the FastAPI RAG service
+### 5. Start the FastAPI RAG service
 
 Start the FastAPI application using the module and ASGI variable defined in your project. 
 
