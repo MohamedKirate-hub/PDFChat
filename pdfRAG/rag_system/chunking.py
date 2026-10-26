@@ -17,15 +17,15 @@ class DocsChunking:
             suffix = path.suffix.lower()
 
             if suffix == ".pdf":
-                loader = PyPDFLoader(str(path), encoding="utf-8")
+                loader = PyPDFLoader(str(path))
                 documents.extend(loader.load())
 
             elif suffix in [".txt", ".md"]:
-                loader = TextLoader(str(path), encoding="utf-8")
+                loader = TextLoader(str(path))
                 documents.extend(loader.load())
 
             elif suffix == ".csv":
-                loader = CSVLoader(file_path=str(path), encoding="utf-8")
+                loader = CSVLoader(file_path=str(path))
                 documents.extend(loader.load())
 
         return self.text_splitter.split_documents(documents)
